@@ -55,7 +55,7 @@ pass=0; fail=0
     echo "# directed tests on $mode"
     [ "$mode" = rtl ] && echo "# core (RTL_CORE):   ${RTL_CORE:-default of run_rtl_sim.sh}"
     [ "$mode" = rtl ] && echo "# PASS = RTL exit 0 and trace equal to isa_sim (compare_trace.py)"
-    echo "# repository commit: $(git -C "$REPO" describe --always --dirty --abbrev=40 2>/dev/null || echo uncommitted)"
+    echo "# repository commit: $("$REPO/verification/repo_version.sh")"
     echo "# date:              $(date -u +%Y-%m-%dT%H:%M:%SZ)"
 } > "$LOG"
 

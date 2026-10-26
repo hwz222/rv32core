@@ -1,4 +1,4 @@
-# 2026-10-26 22:05:49  repo 8aed5cf-dirty
+# 2026-10-26 22:05:49  repo 8aed5cf
 # the ISA simulator's contract: what it must refuse, and how
 
 case                                         want     got      result

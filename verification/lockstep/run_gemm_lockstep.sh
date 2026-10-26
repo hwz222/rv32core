@@ -62,7 +62,7 @@ pass=0; fail=0
 {
     echo "# GEMM lockstep: isa_sim trace vs RTL trace, and RTL dump vs host golden"
     echo "# PASS = RTL exit 0, traces equal (compare_trace.py), dump equal to gemm_host"
-    echo "# repository commit: $(git -C "$REPO" describe --always --dirty --abbrev=40 2>/dev/null || echo uncommitted)"
+    echo "# repository commit: $("$REPO/verification/repo_version.sh")"
     echo "# date:              $(date -u +%Y-%m-%dT%H:%M:%SZ)"
     printf "# %-5s %-12s %-8s %10s %10s %6s  %s\n" status "M N K seed" result instret cycles CPI "trace compare / note"
 } > "$LOG"

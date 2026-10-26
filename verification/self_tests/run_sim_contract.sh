@@ -26,7 +26,7 @@ FLAGS="-march=rv32ima -mabi=ilp32 -O2 -nostdlib -nostartfiles"
 
 pass=0; fail=0
 {
-  echo "# $(date '+%Y-%m-%d %H:%M:%S')  repo $(git -C "$REPO" describe --always --dirty 2>/dev/null || echo uncommitted)"
+  echo "# $(date '+%Y-%m-%d %H:%M:%S')  repo $("$REPO/verification/repo_version.sh" short)"
   echo "# the ISA simulator's contract: what it must refuse, and how"
   echo
   printf '%-44s %-8s %-8s %s\n' "case" "want" "got" "result"

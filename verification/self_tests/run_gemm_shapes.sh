@@ -84,7 +84,7 @@ SLOW=(
 )
 
 {
-  echo "# $(date '+%Y-%m-%d %H:%M:%S')  repo $(git -C "$REPO" describe --always --dirty 2>/dev/null || echo uncommitted)"
+  echo "# $(date '+%Y-%m-%d %H:%M:%S')  repo $("$REPO/verification/repo_version.sh" short)"
   echo "# host golden vs ISA simulator, bit for bit"
   echo
   echo "## Part A -- shapes"
