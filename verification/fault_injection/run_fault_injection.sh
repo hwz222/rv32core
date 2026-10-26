@@ -51,7 +51,7 @@ make -s -C "$WT/isa_sim" >&2 || exit 1
 
 {
     echo "# Fault injection: one hazard mechanism turned off at a time (fault_injection.py)"
-    echo "# repository commit:  $(git -C "$REPO" describe --always --dirty --abbrev=40 2>/dev/null || echo uncommitted)"
+    echo "# repository commit:  $(git -C "$REPO" rev-parse HEAD)   (the worktree tests HEAD)"
     echo "# riscv-tests commit: $(cat "$RT_OUT/COMMIT")"
     echo "# date:               $(date -u +%Y-%m-%dT%H:%M:%SZ)"
     echo "#"

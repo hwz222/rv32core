@@ -1,7 +1,7 @@
 # Fault injection: one hazard mechanism turned off at a time (fault_injection.py)
-# repository commit:  b98e0391aad720722e66655777b2bad3a0607dc0
-# riscv-tests commit: 793a5ff2d99a6d9fbd91e84c34b9a0437e313b88
-# date:               2026-10-25T15:47:42Z
+# repository commit:  62390273cd3607859ce72a559cf8f934950da3f7   (the worktree tests HEAD)
+# riscv-tests commit: 3df703cd52d5f0d8224e3c50bf03c6cb70efff98
+# date:               2026-10-26T15:08:31Z
 #
 # gemm         8x8x8 seed 1 and 13x7x5 seed 2: RTL dump vs host golden, RTL trace vs isa_sim
 # directed     run_directed.sh --rtl: PASS needs the trace to equal isa_sim
