@@ -1,0 +1,71 @@
+# Fault injection: one hazard mechanism turned off at a time (fault_injection.py)
+# repository commit:  b98e0391aad720722e66655777b2bad3a0607dc0
+# riscv-tests commit: 793a5ff2d99a6d9fbd91e84c34b9a0437e313b88
+# date:               2026-10-25T15:47:42Z
+#
+# gemm         8x8x8 seed 1 and 13x7x5 seed 2: RTL dump vs host golden, RTL trace vs isa_sim
+# directed     run_directed.sh --rtl: PASS needs the trace to equal isa_sim
+# self-check   the riscv-test's own answer (RTL exit code), as if there were no trace compare
+# trace compare  run_riscv_tests.sh --rtl: PASS needs the exit code AND an equal trace
+
+== none: no change (the real design)
+   gemm 8x8x8    dump vs host golden: match    trace vs isa_sim: equal
+   gemm 13x7x5   dump vs host golden: match    trace vs isa_sim: equal
+   directed  FAIL 0/13: -
+   riscv-tests self-check reports failure: 0/58   expected failures reported as PASS: 0/2
+   riscv-tests FAIL with trace compare:    0/60   found only by the trace compare: 0
+
+== loaduse_off: no load-use stall: a user right after a load/CSR is not held
+   gemm 8x8x8    dump vs host golden: match    trace vs isa_sim: equal
+   gemm 13x7x5   dump vs host golden: match    trace vs isa_sim: equal
+   directed  FAIL 6/13: t05_load_use t07_jal_jalr t09_csr t11_amo t12_fence t13_mix
+   riscv-tests self-check reports failure: 7/58   expected failures reported as PASS: 0/2
+   riscv-tests FAIL with trace compare:    7/60   found only by the trace compare: 0
+   riscv-tests failing: rv32ua-p-lrsc rv32ui-p-lb rv32ui-p-lbu rv32ui-p-ld_st rv32ui-p-lh rv32ui-p-lhu rv32ui-p-lw
+   first trace difference at line(s): 76 96 145 153 158 163
+
+== branchuse_off: no branch-use stall: a branch in ID compares operands that are not ready
+   gemm 8x8x8    dump vs host golden: match    trace vs isa_sim: DIFFERENT
+   gemm 13x7x5   dump vs host golden: match    trace vs isa_sim: DIFFERENT
+   directed  FAIL 6/13: t01_alu t02_fwd_dist t06_branch_id t08_muldiv t09_csr t13_mix
+   riscv-tests self-check reports failure: 0/58   expected failures reported as PASS: 2/2
+   riscv-tests FAIL with trace compare:    60/60   found only by the trace compare: 58
+   riscv-tests failing: rv32ua-p-amoadd_w rv32ua-p-amoand_w rv32ua-p-amomaxu_w rv32ua-p-amomax_w rv32ua-p-amominu_w rv32ua-p-amomin_w rv32ua-p-amoor_w rv32ua-p-amoswap_w ...
+   first trace difference at line(s): 61
+
+== fwd_exmem_to_ex_off: no forwarding EX/MEM -> EX (ALUOutM)
+   gemm 8x8x8    dump vs host golden: MISMATCH trace vs isa_sim: DIFFERENT
+   gemm 13x7x5   dump vs host golden: MISMATCH trace vs isa_sim: DIFFERENT
+   directed  FAIL 13/13: t01_alu t02_fwd_dist t03_x0 t04_load_store t05_load_use t06_branch_id t07_jal_jalr t08_muldiv t09_csr t10_trap t11_amo t12_fence t13_mix
+   riscv-tests self-check reports failure: 58/58   expected failures reported as PASS: 0/2
+   riscv-tests FAIL with trace compare:    60/60   found only by the trace compare: 0
+   riscv-tests failing: rv32ua-p-amoadd_w rv32ua-p-amoand_w rv32ua-p-amomaxu_w rv32ua-p-amomax_w rv32ua-p-amominu_w rv32ua-p-amomin_w rv32ua-p-amoor_w rv32ua-p-amoswap_w ...
+   first trace difference at line(s): 36
+
+== fwd_memwb_to_ex_off: no forwarding MEM/WB -> EX (ResultW)
+   gemm 8x8x8    dump vs host golden: match    trace vs isa_sim: equal
+   gemm 13x7x5   dump vs host golden: match    trace vs isa_sim: equal
+   directed  FAIL 6/13: t05_load_use t07_jal_jalr t09_csr t11_amo t12_fence t13_mix
+   riscv-tests self-check reports failure: 7/58   expected failures reported as PASS: 0/2
+   riscv-tests FAIL with trace compare:    7/60   found only by the trace compare: 0
+   riscv-tests failing: rv32ua-p-lrsc rv32ui-p-lb rv32ui-p-lbu rv32ui-p-ld_st rv32ui-p-lh rv32ui-p-lhu rv32ui-p-lw
+   first trace difference at line(s): 76 102 145 153 158 163
+
+== fwd_memwb_to_id_off: no forwarding MEM/WB -> ID (needed because the register file is read-first)
+   gemm 8x8x8    dump vs host golden: MISMATCH trace vs isa_sim: DIFFERENT
+   gemm 13x7x5   dump vs host golden: MISMATCH trace vs isa_sim: DIFFERENT
+   directed  FAIL 13/13: t01_alu t02_fwd_dist t03_x0 t04_load_store t05_load_use t06_branch_id t07_jal_jalr t08_muldiv t09_csr t10_trap t11_amo t12_fence t13_mix
+   riscv-tests self-check reports failure: 57/58   expected failures reported as PASS: 0/2
+   riscv-tests FAIL with trace compare:    58/60   found only by the trace compare: 0
+   riscv-tests failing: rv32ua-p-amoadd_w rv32ua-p-amoand_w rv32ua-p-amomaxu_w rv32ua-p-amomax_w rv32ua-p-amominu_w rv32ua-p-amomin_w rv32ua-p-amoor_w rv32ua-p-amoswap_w ...
+   first trace difference at line(s): 74 75 76 77 79 80 82 83
+
+== branch_flush_off: no flush after a taken branch or JAL: the next instruction also runs
+   gemm 8x8x8    dump vs host golden: MISMATCH trace vs isa_sim: DIFFERENT
+   gemm 13x7x5   dump vs host golden: MISMATCH trace vs isa_sim: DIFFERENT
+   directed  FAIL 13/13: t01_alu t02_fwd_dist t03_x0 t04_load_store t05_load_use t06_branch_id t07_jal_jalr t08_muldiv t09_csr t10_trap t11_amo t12_fence t13_mix
+   riscv-tests self-check reports failure: 58/58   expected failures reported as PASS: 0/2
+   riscv-tests FAIL with trace compare:    60/60   found only by the trace compare: 0
+   riscv-tests failing: rv32ua-p-amoadd_w rv32ua-p-amoand_w rv32ua-p-amomaxu_w rv32ua-p-amomax_w rv32ua-p-amominu_w rv32ua-p-amomin_w rv32ua-p-amoor_w rv32ua-p-amoswap_w ...
+   first trace difference at line(s): 2
+

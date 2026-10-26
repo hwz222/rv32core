@@ -1,0 +1,61 @@
+# 2026-10-26 21:31:35  repo 
+# every operator layer of both models: host golden vs isa_sim, every output value
+
+model      benchmark      layer                  result      detail
+mobilenet  bench_conv3x3  stem                   identical    16384 vals  11423114 insns  in 3x32x32 out 16x32x32 k3 s1 p1 g1
+mobilenet  bench_dw       blocks.0.dw            identical    16384 vals   4585587 insns  in 16x32x32 out 16x32x32 k3 s1 p1 g16
+mobilenet  bench_dw       blocks.1.dw            identical     8192 vals   2297347 insns  in 32x32x32 out 32x16x16 k3 s2 p1 g32
+mobilenet  bench_dw       blocks.2.dw            identical    16384 vals   4506059 insns  in 64x16x16 out 64x16x16 k3 s1 p1 g64
+mobilenet  bench_dw       blocks.3.dw            identical     4096 vals   1138147 insns  in 64x16x16 out 64x8x8 k3 s2 p1 g64
+mobilenet  bench_dw       blocks.4.dw            identical     8192 vals   2196587 insns  in 128x8x8 out 128x8x8 k3 s1 p1 g128
+mobilenet  bench_dw       blocks.5.dw            identical     2048 vals    559083 insns  in 128x8x8 out 128x4x4 k3 s2 p1 g128
+mobilenet  bench_dw       blocks.6.dw            identical     4096 vals   1047003 insns  in 256x4x4 out 256x4x4 k3 s1 p1 g256
+mobilenet  bench_dw       blocks.7.dw            identical     4096 vals   1049851 insns  in 256x4x4 out 256x4x4 k3 s1 p1 g256
+mobilenet  bench_dw       blocks.8.dw            identical     4096 vals   1046955 insns  in 256x4x4 out 256x4x4 k3 s1 p1 g256
+mobilenet  bench_dw       blocks.9.dw            identical     4096 vals   1042627 insns  in 256x4x4 out 256x4x4 k3 s1 p1 g256
+mobilenet  bench_dw       blocks.10.dw           identical     4096 vals   1043211 insns  in 256x4x4 out 256x4x4 k3 s1 p1 g256
+mobilenet  bench_dw       blocks.11.dw           identical     1024 vals    273371 insns  in 256x4x4 out 256x2x2 k3 s2 p1 g256
+mobilenet  bench_dw       blocks.12.dw           identical     2048 vals    476987 insns  in 512x2x2 out 512x2x2 k3 s1 p1 g512
+mobilenet  bench_pw       blocks.0.pw            identical    32768 vals  31137691 insns  in 16x32x32 out 32x32x32 k1 s1 p0 g1
+mobilenet  bench_pw       blocks.1.pw            identical    16384 vals  30020667 insns  in 32x16x16 out 64x16x16 k1 s1 p0 g1
+mobilenet  bench_pw       blocks.2.pw            identical    16384 vals  58839635 insns  in 64x16x16 out 64x16x16 k1 s1 p0 g1
+mobilenet  bench_pw       blocks.3.pw            identical     8192 vals  29425851 insns  in 64x8x8 out 128x8x8 k1 s1 p0 g1
+mobilenet  bench_pw       blocks.4.pw            identical     8192 vals  58263515 insns  in 128x8x8 out 128x8x8 k1 s1 p0 g1
+mobilenet  bench_pw       blocks.5.pw            identical     4096 vals  29147043 insns  in 128x4x4 out 256x4x4 k1 s1 p0 g1
+mobilenet  bench_pw       blocks.6.pw            identical     4096 vals  57984699 insns  in 256x4x4 out 256x4x4 k1 s1 p0 g1
+mobilenet  bench_pw       blocks.7.pw            identical     4096 vals  57984067 insns  in 256x4x4 out 256x4x4 k1 s1 p0 g1
+mobilenet  bench_pw       blocks.8.pw            identical     4096 vals  57982363 insns  in 256x4x4 out 256x4x4 k1 s1 p0 g1
+mobilenet  bench_pw       blocks.9.pw            identical     4096 vals  57990451 insns  in 256x4x4 out 256x4x4 k1 s1 p0 g1
+mobilenet  bench_pw       blocks.10.pw           identical     4096 vals  57991419 insns  in 256x4x4 out 256x4x4 k1 s1 p0 g1
+mobilenet  bench_pw       blocks.11.pw           identical     2048 vals  29016283 insns  in 256x2x2 out 512x2x2 k1 s1 p0 g1
+mobilenet  bench_pw       blocks.12.pw           identical     2048 vals  57854299 insns  in 512x2x2 out 512x2x2 k1 s1 p0 g1
+resnet18   bench_conv3x3  stem                   identical    16384 vals  11428538 insns  in 3x32x32 out 16x32x32 k3 s1 p1 g1
+resnet18   bench_conv3x3  layer1.0.conv1         identical    16384 vals  55768243 insns  in 16x32x32 out 16x32x32 k3 s1 p1 g1
+resnet18   bench_conv3x3  layer1.0.conv2         identical    16384 vals  55814874 insns  in 16x32x32 out 16x32x32 k3 s1 p1 g1
+resnet18   bench_conv3x3  layer1.1.conv1         identical    16384 vals  55758395 insns  in 16x32x32 out 16x32x32 k3 s1 p1 g1
+resnet18   bench_conv3x3  layer1.1.conv2         identical    16384 vals  55819200 insns  in 16x32x32 out 16x32x32 k3 s1 p1 g1
+resnet18   bench_conv3x3  layer2.0.conv1         identical     8192 vals  27882235 insns  in 16x32x32 out 32x16x16 k3 s2 p1 g1
+resnet18   bench_conv3x3  layer2.0.conv2         identical     8192 vals  54032843 insns  in 32x16x16 out 32x16x16 k3 s1 p1 g1
+resnet18   bench_conv3x3  layer2.1.conv1         identical     8192 vals  54000491 insns  in 32x16x16 out 32x16x16 k3 s1 p1 g1
+resnet18   bench_conv3x3  layer2.1.conv2         identical     8192 vals  54035819 insns  in 32x16x16 out 32x16x16 k3 s1 p1 g1
+resnet18   bench_conv3x3  layer3.0.conv1         identical     4096 vals  26978611 insns  in 32x16x16 out 64x8x8 k3 s2 p1 g1
+resnet18   bench_conv3x3  layer3.0.conv2         identical     4096 vals  51394773 insns  in 64x8x8 out 64x8x8 k3 s1 p1 g1
+resnet18   bench_conv3x3  layer3.1.conv1         identical     4096 vals  51381555 insns  in 64x8x8 out 64x8x8 k3 s1 p1 g1
+resnet18   bench_conv3x3  layer3.1.conv2         identical     4096 vals  51393351 insns  in 64x8x8 out 64x8x8 k3 s1 p1 g1
+resnet18   bench_conv3x3  layer4.0.conv1         identical     2048 vals  25638339 insns  in 64x8x8 out 128x4x4 k3 s2 p1 g1
+resnet18   bench_conv3x3  layer4.0.conv2         identical     2048 vals  46723574 insns  in 128x4x4 out 128x4x4 k3 s1 p1 g1
+resnet18   bench_conv3x3  layer4.1.conv1         identical     2048 vals  46714483 insns  in 128x4x4 out 128x4x4 k3 s1 p1 g1
+resnet18   bench_conv3x3  layer4.1.conv2         identical     2048 vals  46720844 insns  in 128x4x4 out 128x4x4 k3 s1 p1 g1
+resnet18   bench_pw       layer2.0.shortcut      identical     8192 vals   7810710 insns  in 16x32x32 out 32x16x16 k1 s2 p0 g1
+resnet18   bench_pw       layer3.0.shortcut      identical     4096 vals   7514486 insns  in 32x16x16 out 64x8x8 k1 s2 p0 g1
+resnet18   bench_pw       layer4.0.shortcut      identical     2048 vals   7370580 insns  in 64x8x8 out 128x4x4 k1 s2 p0 g1
+resnet18   bench_resadd   layer1.0.add           identical    16384 vals   1376649 insns  shape 16x32x32, two input scales
+resnet18   bench_resadd   layer1.1.add           identical    16384 vals   1376265 insns  shape 16x32x32, two input scales
+resnet18   bench_resadd   layer2.0.add           identical     8192 vals    688239 insns  shape 32x16x16, two input scales
+resnet18   bench_resadd   layer2.1.add           identical     8192 vals    688161 insns  shape 32x16x16, two input scales
+resnet18   bench_resadd   layer3.0.add           identical     4096 vals    319647 insns  shape 64x8x8, two input scales
+resnet18   bench_resadd   layer3.1.add           identical     4096 vals    344175 insns  shape 64x8x8, two input scales
+resnet18   bench_resadd   layer4.0.add           identical     2048 vals    159826 insns  shape 128x4x4, two input scales
+resnet18   bench_resadd   layer4.1.add           identical     2048 vals    172186 insns  shape 128x4x4, two input scales
+
+# 55 layers identical, 0 differ  (33 s)

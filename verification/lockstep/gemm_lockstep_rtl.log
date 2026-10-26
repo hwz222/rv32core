@@ -1,0 +1,16 @@
+# GEMM lockstep: isa_sim trace vs RTL trace, and RTL dump vs host golden
+# PASS = RTL exit 0, traces equal (compare_trace.py), dump equal to gemm_host
+# repository commit: uncommitted
+# date:              2026-10-26T13:47:55Z
+# status M N K seed   result      instret     cycles    CPI  trace compare / note
+  PASS  8 8 8 1      dump=match       4443       5027  1.131  OK: 4443 lines match (0 time-CSR reads compared without x<rd>) (the default shape)
+  PASS  13 7 5 2     dump=match       4483       5036  1.123  OK: 4483 lines match (0 time-CSR reads compared without x<rd>) (no dimension shares a factor)
+  PASS  1 1 1 3      dump=match         27         37  1.370  OK: 27 lines match (0 time-CSR reads compared without x<rd>) (every loop runs once; the result is one word)
+  PASS  1 1 64 4     dump=match        472        544  1.153  OK: 472 lines match (0 time-CSR reads compared without x<rd>) (K only: one long dot product (load-use and accumulation chains))
+  PASS  64 1 1 5     dump=match        723        858  1.187  OK: 723 lines match (0 time-CSR reads compared without x<rd>) (M only: the outer loop, single-term sums)
+  PASS  16 16 16 6   dump=match      31907      36267  1.137  OK: 31907 lines match (0 time-CSR reads compared without x<rd>) (power-of-two cube)
+  PASS  17 23 9 7    dump=match      29468      33385  1.133  OK: 29468 lines match (0 time-CSR reads compared without x<rd>) (odd sizes, all different)
+  PASS  32 32 32 8   dump=match     241972     275772  1.140  OK: 241972 lines match (0 time-CSR reads compared without x<rd>) (about 33k multiply-accumulates)
+  PASS  64 64 64 9   dump=match    1884695    2150942  1.141  OK: 1884695 lines match (0 time-CSR reads compared without x<rd>) (the largest shape here, about 262k multiply-accumulates)
+# pass=9 fail=0
+# core used: core

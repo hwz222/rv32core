@@ -1,0 +1,2 @@
+# Built ELFs (make in this folder). They are build output.
+build/

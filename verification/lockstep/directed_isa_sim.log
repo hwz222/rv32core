@@ -1,0 +1,17 @@
+# directed tests on isa_sim
+# repository commit: uncommitted
+# date:              2026-10-26T13:46:55Z
+PASS  t01_alu          45 trace lines
+PASS  t02_fwd_dist     58 trace lines
+PASS  t03_x0           32 trace lines
+PASS  t04_load_store   71 trace lines
+PASS  t05_load_use     39 trace lines
+PASS  t06_branch_id    76 trace lines
+PASS  t07_jal_jalr     52 trace lines
+PASS  t08_muldiv       55 trace lines
+PASS  t09_csr          48 trace lines
+PASS  t10_trap         128 trace lines
+PASS  t11_amo          49 trace lines
+PASS  t12_fence        32 trace lines
+PASS  t13_mix          111 trace lines
+# pass=13 fail=0

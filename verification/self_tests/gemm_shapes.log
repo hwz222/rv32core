@@ -1,0 +1,47 @@
+# 2026-10-26 21:31:15  repo uncommitted
+# host golden vs ISA simulator, bit for bit
+
+## Part A -- shapes
+
+shape (MxNxK s)      host       isa_sim    what it stresses
+1x1x1 s1             ok         ok         every loop bound is 1; the result is a single word
+1x1x64 s2            ok         ok         K only: a dot product, M and N degenerate
+64x1x1 s3            ok         ok         M only: a column of single-term sums, inner loop runs once
+1x64x1 s4            ok         ok         N only: a row, K degenerate
+2x1x1 s18            ok         ok         M=2: the smallest case where the outer loop iterates at all
+1x2x1 s19            ok         ok         N=2: the smallest case where the middle loop iterates
+1x1x2 s20            ok         ok         K=2: the smallest real accumulation, catches acc=a*b overwrite
+2x2x2 s21            ok         ok         smallest power-of-two cube
+16x16x16 s22         ok         ok         power-of-two cube, one tile for most tile sizes
+64x64x64 s23         ok         ok         power-of-two cube, several tiles
+13x7x5 s5            ok         ok         no dimension shares a factor, none is a power of two
+17x19x23 s6          ok         ok         three different primes
+7x11x13 s24          ok         ok         three different primes, all below the first shape's
+1x16x33 s7           ok         ok         a single row against a wide, odd K
+33x33x33 s11         ok         ok         cube, one past a power of two in every dimension
+31x31x31 s12         ok         ok         cube, one below a power of two in every dimension
+65x63x64 s25         ok         ok         one past, one below and exactly a power of two, together
+64x3x5 s8            ok         ok         M largest by far
+3x64x5 s9            ok         ok         N largest by far
+3x5x64 s10           ok         ok         K largest by far
+100x1x100 s26        ok         ok         M and K large with N=1: a matrix-vector product
+1x100x100 s27        ok         ok         N and K large with M=1: a vector-matrix product
+128x96x112 s14       ok         ok         non-square, result tensor 48 KB
+8x8x8 s1             ok         ok         the default shape and seed
+8x8x8 s13            ok         ok         the default shape, different seed
+256x256x256 s15      ok         ok         1.7e7 multiply-accumulates
+417x417x417 s16      ok         ok         the largest cube the 2 MB data SRAM holds
+1x1x200000 s28       ok         ok         the deepest accumulation the memory map allows (K=200000)
+
+## Part B -- build discipline and the simulator's contract
+
+418x418x418 must not link                      rejected   link.ld ASSERT fires, as intended
+make clean removes host, elf and header        ok         nothing left behind
+rebuild A, B, A gives A's original answer      ok         no stale generated header
+generator is deterministic across builds       ok         same tensors both times
+a different seed changes the result            ok         the hide() barrier is doing its job
+isa_sim leaves the ELF byte identical          ok         same SHA-256
+isa_sim gives the same answer twice            ok         deterministic
+instruction count scales with the work         ok         16^3 31907 -> 32^3 241972, about 8x
+
+# 36 passed, 0 failed

@@ -1,0 +1,8 @@
+# 2026-09-23 16:36:15  repo fc4d3ac  riscv images 1000
+[resnet18_w16] host C   : 10000 images, 0 differ from qref.py, accuracy 92.44%  (185 s)
+[resnet18_w16] RV32IMA  : 1000 images on isa_sim, 0 differ from qref.py, accuracy 92.20% (qref.py on the same images: 92.20%), 797M instructions per image  (2370 s)
+# result: ALL LOGITS IDENTICAL
+# 2026-09-23 17:35:45  repo fc4d3ac  riscv images 1000
+[mobilenet_v1_a050] host C   : 10000 images, 0 differ from qref.py, accuracy 90.88%  (118 s)
+[mobilenet_v1_a050] RV32IMA  : 1000 images on isa_sim, 0 differ from qref.py, accuracy 91.10% (qref.py on the same images: 91.10%), 644M instructions per image  (1904 s)
+# result: ALL LOGITS IDENTICAL

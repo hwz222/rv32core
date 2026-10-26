@@ -1,0 +1,653 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2120 1050" width="2120" height="1050" font-family="&quot;JetBrains Mono&quot;, ui-monospace, &quot;SFMono-Regular&quot;, Menlo, monospace">
+<style>
+/* rtl/microarch_diagram.svg: five-stage RV32IMA pipeline; control signals dashed */
+text { fill: #1d2421; font-family: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace, "Noto Sans TC", "Noto Sans CJK TC", "Microsoft JhengHei", sans-serif; }
+.t-title { font-size: 13px; font-weight: 600; }
+.t-small { font-size: 10.5px; fill: #5d6b65; }
+.t-field { font-size: 10px; fill: #5d6b65; }
+.t-field-s { font-size: 8.5px; fill: #5d6b65; }
+.t-stage { font-size: 15px; font-weight: 600; fill: #5d6b65; letter-spacing: .08em; }
+.t-ctrl { fill: #d40000; font-size: 10.5px; }
+.t-ctrl-s { fill: #d40000; font-size: 8.5px; }
+.t-fwd { fill: #0072b2; font-size: 10.5px; }
+.t-haz { fill: #9a6700; font-size: 10.5px; }
+.t-pc { fill: #00785a; font-size: 10.5px; }
+.blk { fill: #ffffff; stroke: #1d2421; stroke-width: 1.4; }
+.blk-ext { fill: #eef1ee; stroke: #5d6b65; stroke-width: 1.2; }
+.blk-haz { fill: #ffffff; stroke: #e69f00; stroke-width: 1.4; }
+.blk-fwd { fill: #ffffff; stroke: #0072b2; stroke-width: 1.4; }
+.blk-ctrl { fill: #ffffff; stroke: #ff1a1a; stroke-width: 1.4; }
+.preg { fill: #eef1ee; stroke: #1d2421; stroke-width: 1.4; }
+.w-data { fill: none; stroke: #1d2421; stroke-width: 1.3; }
+.w-ctrl { fill: none; stroke: #ff1a1a; stroke-width: 1.4;  stroke-dasharray: 6 3; }
+.w-fwd { fill: none; stroke: #0072b2; stroke-width: 2.2; }
+.w-haz { fill: none; stroke: #e69f00; stroke-width: 1.8; }
+.w-pc { fill: none; stroke: #009e73; stroke-width: 3; }
+.dot { stroke: none; }
+.stage-band { fill: #eef1ee; }
+.m-data { fill: #1d2421; } .m-ctrl { fill: #ff1a1a; } .m-fwd { fill: #0072b2; } .m-haz { fill: #e69f00; } .m-pc { fill: #009e73; }
+.x-notM, .x-notCsr, .x-notTrap, .x-notCsrA, .x-notA, .x-CsrNotA, .x-ANotCsr, .x-CsrNotTrap { display: none; }
+</style>
+<rect x="0" y="0" width="2120" height="1050" fill="#ffffff"/>
+<title>RV32IMA five-stage pipeline (IF, ID, EX, MEM, WB)</title>
+<defs>
+  <marker id="core-a-data" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" class="m-data"/>
+  </marker>
+  <marker id="core-a-ctrl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" class="m-ctrl"/>
+  </marker>
+  <marker id="core-a-fwd" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" class="m-fwd"/>
+  </marker>
+  <marker id="core-a-haz" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" class="m-haz"/>
+  </marker>
+  <marker id="core-a-pc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" class="m-pc"/>
+  </marker>
+</defs>
+<g class="L-base">
+  <rect x="20" y="8" width="320" height="28" rx="4" class="stage-band"/>
+  <rect x="380" y="8" width="490" height="28" rx="4" class="stage-band"/>
+  <rect x="910" y="8" width="430" height="28" rx="4" class="stage-band"/>
+  <rect x="1390" y="8" width="470" height="28" rx="4" class="stage-band"/>
+  <rect x="1910" y="8" width="190" height="28" rx="4" class="stage-band"/>
+  <rect x="350" y="400" width="22" height="390" rx="2" class="preg"/>
+  <polyline points="354 400 361 409 368 400" class="w-data" fill="none"/>
+  <rect x="880" y="180" width="22" height="650" rx="2" class="preg"/>
+  <polyline points="884 180 891 189 898 180" class="w-data" fill="none"/>
+  <rect x="1360" y="180" width="22" height="650" rx="2" class="preg"/>
+  <polyline points="1364 180 1371 189 1378 180" class="w-data" fill="none"/>
+  <rect x="1880" y="180" width="22" height="650" rx="2" class="preg"/>
+  <polyline points="1884 180 1891 189 1898 180" class="w-data" fill="none"/>
+  <polygon points="60 420 86 432 86 538 60 550" class="blk"/>
+  <rect x="120" y="440" width="22" height="60" rx="2" class="preg"/>
+  <polygon points="166 440 192 452 192 484 166 496" class="blk"/>
+  <rect x="200" y="440" width="100" height="100" rx="4" class="blk-ext"/>
+  <rect x="200" y="600" width="40" height="40" rx="4" class="blk"/>
+  <rect x="600" y="184" width="80" height="256" rx="4" class="blk"/>
+  <rect x="440" y="450" width="110" height="150" rx="4" class="blk"/>
+  <rect x="440" y="640" width="90" height="40" rx="4" class="blk"/>
+  <polygon points="575 458 601 470 601 500 575 512" class="blk"/>
+  <polygon points="575 520 601 532 601 562 575 574" class="blk"/>
+  <rect x="650" y="488" width="40" height="34" rx="4" class="blk"/>
+  <rect x="820" y="612" width="40" height="36" rx="4" class="blk"/>
+  <rect x="780" y="802" width="82" height="28" rx="4" class="blk x-Trap"/>
+  <polygon points="960 430 986 442 986 488 960 500" class="blk"/>
+  <polygon points="960 520 986 532 986 578 960 590" class="blk"/>
+  <polygon points="1030 420 1056 432 1056 478 1030 490" class="blk"/>
+  <polygon points="1030 520 1056 532 1056 578 1030 590" class="blk"/>
+  <polygon points="1090,420 1150,450 1150,560 1090,590 1090,520 1102,505 1090,490" class="blk"/>
+  <polygon points="1190 465 1216 477 1216 523 1190 535" class="blk"/>
+  <rect x="1108" y="664" width="36" height="28" rx="4" class="blk"/>
+  <rect x="1092" y="604" width="62" height="34" rx="4" class="blk x-M"/>
+  <rect x="1240" y="802" width="82" height="28" rx="4" class="blk x-Trap"/>
+  <rect x="1916" y="575" width="72" height="50" rx="4" class="blk"/>
+  <polygon points="2030 480 2056 492 2056 548 2030 560" class="blk"/>
+  <polygon points="1810 465 1836 477 1836 533 1810 545" class="blk x-CsrOrA"/>
+  <polygon points="1440 638 1466 650 1466 670 1440 682" class="blk x-A"/>
+  <rect x="1478" y="640" width="37" height="40" rx="4" class="blk"/>
+  <rect x="1544" y="560" width="156" height="130" rx="4" class="blk-ext"/>
+  <rect x="1414" y="256" width="74" height="74" rx="4" class="blk x-Csr"/>
+  <rect x="1562" y="256" width="74" height="74" rx="4" class="blk x-Trap"/>
+  <rect x="1730" y="256" width="92" height="74" rx="4" class="blk x-A"/>
+  <rect x="1500" y="410" width="66" height="30" rx="4" class="blk x-A"/>
+  <rect x="1724" y="628" width="58" height="28" rx="4" class="blk x-A"/>
+</g>
+<g class="L-data">
+  <path d="M86 470 L120 470" class="w-data" marker-end="url(#core-a-data)"/>
+  <path d="M136 522 L136 500" class="w-data" marker-end="url(#core-a-data)"/>
+  <path d="M142 470 L166 470" class="w-data" marker-end="url(#core-a-data)"/>
+  <circle cx="160" cy="470" r="3" class="dot m-data"/>
+  <path d="M192 468 L200 468" class="w-data" marker-end="url(#core-a-data)"/>
+  <circle cx="382" cy="700" r="3" class="dot m-data"/>
+  <path d="M382 700 L382 392 L152 392 L152 446 L166 446" class="w-data" marker-end="url(#core-a-data)"/>
+  <path d="M300 470 L350 470" class="w-data" marker-end="url(#core-a-data)"/>
+  <path d="M160 470 L160 700 L350 700" class="w-data" marker-end="url(#core-a-data)"/>
+  <circle cx="160" cy="620" r="3" class="dot m-data"/>
+  <path d="M160 620 L200 620" class="w-data" marker-end="url(#core-a-data)"/>
+  <path d="M2080 520 L2080 132 L404 132 L404 580 L440 580" class="w-data" marker-end="url(#core-a-data)"/>
+  <path d="M2000 754 L2000 144 L414 144 L414 560 L440 560" class="w-data" marker-end="url(#core-a-data)"/>
+  <path d="M372 470 L392 470" class="w-data" marker-end="url(#core-a-data)"/>
+  <circle cx="392" cy="470" r="3" class="dot m-data"/>
+  <path d="M392 470 L392 300 L600 300" class="w-data" marker-end="url(#core-a-data)"/>
+  <path d="M392 470 L440 470" class="w-data" marker-end="url(#core-a-data)"/>
+  <circle cx="392" cy="520" r="3" class="dot m-data"/>
+  <path d="M392 520 L440 520" class="w-data" marker-end="url(#core-a-data)"/>
+  <path d="M392 470 L392 772" class="w-data"/>
+  <circle cx="392" cy="660" r="3" class="dot m-data"/>
+  <path d="M392 660 L440 660" class="w-data" marker-end="url(#core-a-data)"/>
+  <path d="M530 660 L880 660" class="w-data" marker-end="url(#core-a-data)"/>
+  <path d="M372 700 L880 700" class="w-data" marker-end="url(#core-a-data)"/>
+  <circle cx="392" cy="700" r="3" class="dot m-data x-Csr"/>
+  <path d="M392 718 L880 718" class="w-data" marker-end="url(#core-a-data)"/>
+  <path d="M392 736 L880 736" class="w-data" marker-end="url(#core-a-data)"/>
+  <path d="M392 754 L880 754" class="w-data" marker-end="url(#core-a-data)"/>
+  <path d="M392 772 L880 772" class="w-data" marker-end="url(#core-a-data)"/>
+  <path d="M550 470 L575 470" class="w-data" marker-end="url(#core-a-data)"/>
+  <path d="M550 532 L575 532" class="w-data" marker-end="url(#core-a-data)"/>
+  <path d="M601 485 L622 485" class="w-data"/>
+  <circle cx="622" cy="485" r="3" class="dot m-data"/>
+  <path d="M622 485 L622 448 L880 448" class="w-data" marker-end="url(#core-a-data)"/>
+  <path d="M601 547 L628 547" class="w-data"/>
+  <circle cx="628" cy="547" r="3" class="dot m-data"/>
+  <path d="M628 547 L628 600 L880 600" class="w-data" marker-end="url(#core-a-data)"/>
+  <path d="M622 485 L640 485 L640 498 L650 498" class="w-data" marker-end="url(#core-a-data)"/>
+  <path d="M628 547 L644 547 L644 512 L650 512" class="w-data" marker-end="url(#core-a-data)"/>
+  <path d="M690 505 L700 505" class="w-data"/>
+  <circle cx="700" cy="505" r="3" class="dot m-data"/>
+  <circle cx="670" cy="772" r="3" class="dot m-data"/>
+  <path d="M670 772 L670 522" class="w-data" marker-end="url(#core-a-data)"/>
+  <circle cx="830" cy="700" r="3" class="dot m-data"/>
+  <path d="M830 700 L830 648" class="w-data" marker-end="url(#core-a-data)"/>
+  <circle cx="850" cy="660" r="3" class="dot m-data"/>
+  <path d="M850 660 L850 648" class="w-data" marker-end="url(#core-a-data)"/>
+  <path d="M862 816 L880 816" class="w-data x-Trap" marker-end="url(#core-a-data)"/>
+  <path d="M902 448 L944 448 L944 445 L960 445" class="w-data" marker-end="url(#core-a-data)"/>
+  <path d="M902 600 L948 600 L948 535 L960 535" class="w-data" marker-end="url(#core-a-data)"/>
+  <path d="M986 465 L996 465 L996 440 L1030 440" class="w-data" marker-end="url(#core-a-data)"/>
+  <path d="M986 555 L996 555 L996 535 L1030 535" class="w-data" marker-end="url(#core-a-data)"/>
+  <circle cx="996" cy="555" r="3" class="dot m-data"/>
+  <path d="M996 555 L996 650 L1360 650" class="w-data" marker-end="url(#core-a-data)"/>
+  <path d="M902 700 L1360 700" class="w-data"/>
+  <path d="M1350 700 L1360 700" class="w-data x-Csr" marker-end="url(#core-a-data)"/>
+  <circle cx="1006" cy="700" r="3" class="dot m-data"/>
+  <path d="M1006 700 L1006 460 L1030 460" class="w-data" marker-end="url(#core-a-data)"/>
+  <path d="M902 660 L1018 660 L1018 555 L1030 555" class="w-data" marker-end="url(#core-a-data)"/>
+  <path d="M1056 455 L1090 455" class="w-data" marker-end="url(#core-a-data)"/>
+  <path d="M1056 555 L1090 555" class="w-data" marker-end="url(#core-a-data)"/>
+  <path d="M1150 505 L1166 505 L1166 480 L1190 480" class="w-data" marker-end="url(#core-a-data)"/>
+  <path d="M1216 500 L1360 500" class="w-data" marker-end="url(#core-a-data)"/>
+  <circle cx="1086" cy="700" r="3" class="dot m-data"/>
+  <path d="M1086 700 L1086 678 L1108 678" class="w-data" marker-end="url(#core-a-data)"/>
+  <path d="M1144 678 L1176 678 L1176 500 L1190 500" class="w-data" marker-end="url(#core-a-data)"/>
+  <circle cx="1012" cy="440" r="3" class="dot m-data x-M"/>
+  <path d="M1012 440 L1012 612 L1092 612" class="w-data x-M" marker-end="url(#core-a-data)"/>
+  <circle cx="1070" cy="650" r="3" class="dot m-data x-M"/>
+  <path d="M1070 650 L1070 628 L1092 628" class="w-data x-M" marker-end="url(#core-a-data)"/>
+  <path d="M1154 621 L1184 621 L1184 520 L1190 520" class="w-data x-M" marker-end="url(#core-a-data)"/>
+  <path d="M902 754 L1360 754" class="w-data" marker-end="url(#core-a-data)"/>
+  <path d="M902 772 L1360 772" class="w-data" marker-end="url(#core-a-data)"/>
+  <path d="M902 718 L1046 718" class="w-data"/>
+  <path d="M902 736 L1062 736" class="w-data"/>
+  <path d="M902 816 L1240 816" class="w-data x-Trap" marker-end="url(#core-a-data)"/>
+  <path d="M1322 816 L1360 816" class="w-data x-Trap" marker-end="url(#core-a-data)"/>
+  <path d="M1902 500 L2030 500" class="w-data" marker-end="url(#core-a-data)"/>
+  <circle cx="1928" cy="500" r="3" class="dot m-data"/>
+  <path d="M1928 500 L1928 575" class="w-data" marker-end="url(#core-a-data)"/>
+  <path d="M1902 772 L1970 772 L1970 625" class="w-data" marker-end="url(#core-a-data)"/>
+  <path d="M1988 600 L2016 600 L2016 540 L2030 540" class="w-data" marker-end="url(#core-a-data)"/>
+  <path d="M2056 520 L2080 520" class="w-data"/>
+  <circle cx="2080" cy="520" r="3" class="dot m-data"/>
+  <path d="M1902 754 L2000 754" class="w-data"/>
+  <circle cx="2000" cy="754" r="3" class="dot m-data"/>
+  <path d="M1902 244 L1970 244" class="w-data x-Trap" marker-end="url(#core-a-data)"/>
+  <circle cx="790" cy="700" r="3" class="dot m-data x-Trap"/>
+  <path d="M790 700 L790 802" class="w-data x-Trap" marker-end="url(#core-a-data)"/>
+  <path d="M840 590 L812 590 L812 802" class="w-data x-Trap" marker-end="url(#core-a-data)"/>
+  <path d="M700 505 L722 505" class="w-data x-Trap"/>
+  <circle cx="1166" cy="505" r="3" class="dot m-data x-Trap"/>
+  <path d="M1166 505 L1166 790 L1262 790 L1262 802" class="w-data x-Trap" marker-end="url(#core-a-data)"/>
+  <circle cx="1286" cy="772" r="3" class="dot m-data x-Trap"/>
+  <path d="M1286 772 L1286 802" class="w-data x-Trap" marker-end="url(#core-a-data)"/>
+  <path d="M1382 500 L1780 500" class="w-data"/>
+  <path d="M1780 500 L1880 500" class="w-data x-notCsrA" marker-end="url(#core-a-data)"/>
+  <path d="M1780 500 L1810 500" class="w-data x-CsrOrA" marker-end="url(#core-a-data)"/>
+  <path d="M1836 500 L1880 500" class="w-data x-CsrOrA" marker-end="url(#core-a-data)"/>
+  <path d="M1382 650 L1426 650" class="w-data"/>
+  <path d="M1426 650 L1478 650" class="w-data x-notA" marker-end="url(#core-a-data)"/>
+  <path d="M1426 650 L1440 650" class="w-data x-A" marker-end="url(#core-a-data)"/>
+  <path d="M1466 660 L1478 660" class="w-data x-A" marker-end="url(#core-a-data)"/>
+  <circle cx="1496" cy="500" r="3" class="dot m-data"/>
+  <path d="M1496 500 L1496 640" class="w-data" marker-end="url(#core-a-data)"/>
+  <circle cx="1496" cy="590" r="3" class="dot m-data"/>
+  <path d="M1496 590 L1544 590" class="w-data" marker-end="url(#core-a-data)"/>
+  <circle cx="1504" cy="772" r="3" class="dot m-data"/>
+  <path d="M1504 772 L1504 680" class="w-data" marker-end="url(#core-a-data)"/>
+  <path d="M1515 660 L1544 660" class="w-data" marker-end="url(#core-a-data)"/>
+  <path d="M1700 600 L1916 600" class="w-data" marker-end="url(#core-a-data)"/>
+  <path d="M1382 754 L1880 754" class="w-data" marker-end="url(#core-a-data)"/>
+  <path d="M1382 772 L1880 772" class="w-data" marker-end="url(#core-a-data)"/>
+  <path d="M1480 330 L1480 520 L1810 520" class="w-data x-Csr" marker-end="url(#core-a-data)"/>
+  <path d="M1382 700 L1402 700" class="w-data x-Csr"/>
+  <path d="M1402 700 L1402 290 L1414 290" class="w-data x-Csr" marker-end="url(#core-a-data)"/>
+  <circle cx="1402" cy="500" r="3" class="dot m-data x-Csr"/>
+  <path d="M1382 816 L1402 816 L1402 700" class="w-data x-Trap"/>
+  <circle cx="1402" cy="700" r="3" class="dot m-data x-Trap"/>
+  <circle cx="1402" cy="342" r="3" class="dot m-data x-Trap"/>
+  <path d="M1402 342 L1574 342 L1574 330" class="w-data x-Trap" marker-end="url(#core-a-data)"/>
+  <path d="M1488 272 L1562 272" class="w-data x-Trap" marker-end="url(#core-a-data)"/>
+  <path d="M1562 316 L1488 316" class="w-data x-Trap" marker-end="url(#core-a-data)"/>
+  <path d="M1622 256 L1622 244 L1880 244" class="w-data x-Trap" marker-end="url(#core-a-data)"/>
+  <circle cx="1762" cy="500" r="3" class="dot m-data x-A"/>
+  <path d="M1762 500 L1762 330" class="w-data x-A" marker-end="url(#core-a-data)"/>
+  <circle cx="1796" cy="600" r="3" class="dot m-data x-A"/>
+  <path d="M1796 600 L1796 540 L1810 540" class="w-data x-A" marker-end="url(#core-a-data)"/>
+  <path d="M1796 600 L1796 642 L1782 642" class="w-data x-A" marker-end="url(#core-a-data)"/>
+  <circle cx="1414" cy="650" r="3" class="dot m-data x-A"/>
+  <path d="M1414 650 L1414 722 L1738 722 L1738 656" class="w-data x-A" marker-end="url(#core-a-data)"/>
+  <path d="M1768 656 L1768 706 L1426 706 L1426 670 L1440 670" class="w-data x-A" marker-end="url(#core-a-data)"/>
+  <circle cx="996" cy="440" r="3" class="dot m-data x-MorA"/>
+  <path d="M996 440 L996 414 L904 414" class="w-data x-MorA" marker-end="url(#core-a-data)"/>
+  <circle cx="996" cy="630" r="3" class="dot m-data x-MorA"/>
+  <path d="M996 630 L904 630" class="w-data x-MorA" marker-end="url(#core-a-data)"/>
+</g>
+<g class="L-ctrl">
+  <path d="M1940 210 L1940 156 L510 156 L510 450" class="w-ctrl" marker-end="url(#core-a-ctrl)"/>
+  <text x="1200" y="152" class="t-ctrl" text-anchor="start">RegWriteW</text>
+  <path d="M600 410 L426 410 L426 622 L470 622 L470 640" class="w-ctrl" marker-end="url(#core-a-ctrl)"/>
+  <text x="476" y="634" class="t-ctrl" text-anchor="start">ImmSelD</text>
+  <path d="M680 192 L880 192" class="w-ctrl" marker-end="url(#core-a-ctrl)"/>
+  <text x="686" y="189" class="t-ctrl" text-anchor="start">AluOutNotResultD</text>
+  <path d="M680 210 L880 210" class="w-ctrl" marker-end="url(#core-a-ctrl)"/>
+  <text x="686" y="207" class="t-ctrl" text-anchor="start">RegWriteD, WbSelD</text>
+  <path d="M680 228 L880 228" class="w-ctrl" marker-end="url(#core-a-ctrl)"/>
+  <text x="686" y="225" class="t-ctrl" text-anchor="start">MemWriteD, MemReadD</text>
+  <path d="M680 246 L880 246" class="w-ctrl" marker-end="url(#core-a-ctrl)"/>
+  <text x="686" y="243" class="t-ctrl" text-anchor="start">LinkD</text>
+  <path d="M680 264 L880 264" class="w-ctrl" marker-end="url(#core-a-ctrl)"/>
+  <text x="686" y="261" class="t-ctrl" text-anchor="start">JalrD</text>
+  <path d="M680 282 L880 282" class="w-ctrl" marker-end="url(#core-a-ctrl)"/>
+  <text x="686" y="279" class="t-ctrl" text-anchor="start">AluOpD</text>
+  <path d="M680 300 L880 300" class="w-ctrl" marker-end="url(#core-a-ctrl)"/>
+  <text x="686" y="297" class="t-ctrl" text-anchor="start">SrcAD</text>
+  <path d="M680 318 L880 318" class="w-ctrl" marker-end="url(#core-a-ctrl)"/>
+  <text x="686" y="315" class="t-ctrl" text-anchor="start">SrcBD</text>
+  <path d="M680 336 L880 336" class="w-ctrl x-M" marker-end="url(#core-a-ctrl)"/>
+  <text x="686" y="333" class="t-ctrl x-M" text-anchor="start">MulDivD, MulDivOpD</text>
+  <path d="M680 354 L880 354" class="w-ctrl x-Csr" marker-end="url(#core-a-ctrl)"/>
+  <text x="686" y="351" class="t-ctrl x-Csr" text-anchor="start">CsrD, CsrCmdD, CsrWriteD</text>
+  <path d="M680 372 L880 372" class="w-ctrl x-Trap" marker-end="url(#core-a-ctrl)"/>
+  <text x="686" y="369" class="t-ctrl x-Trap" text-anchor="start">MretD</text>
+  <path d="M680 390 L880 390" class="w-ctrl x-A" marker-end="url(#core-a-ctrl)"/>
+  <text x="686" y="387" class="t-ctrl x-A" text-anchor="start">LrD, ScD, AmoD, AmoOpD</text>
+  <path d="M680 408 L700 408" class="w-ctrl"/>
+  <text x="686" y="404" class="t-ctrl-s" text-anchor="start">BranchD, JalD, ReadsRs1D/2D</text>
+  <path d="M902 192 L1360 192" class="w-ctrl" marker-end="url(#core-a-ctrl)"/>
+  <text x="906" y="189" class="t-ctrl" text-anchor="start">AluOutNotResultE</text>
+  <circle cx="1340" cy="192" r="3" class="dot m-ctrl"/>
+  <circle cx="1340" cy="210" r="3" class="dot m-ctrl"/>
+  <path d="M1340 192 L1340 990" class="w-ctrl" marker-end="url(#core-a-ctrl)"/>
+  <text x="1337" y="982" class="t-ctrl" transform="rotate(-90 1337 982)">AluOutNotResultE, RegWriteE</text>
+  <path d="M902 210 L1360 210" class="w-ctrl" marker-end="url(#core-a-ctrl)"/>
+  <text x="906" y="207" class="t-ctrl" text-anchor="start">RegWriteE, WbSelE</text>
+  <path d="M902 228 L1360 228" class="w-ctrl" marker-end="url(#core-a-ctrl)"/>
+  <text x="906" y="225" class="t-ctrl" text-anchor="start">MemWriteE, MemReadE</text>
+  <path d="M902 246 L1198 246 L1198 471" class="w-ctrl" marker-end="url(#core-a-ctrl)"/>
+  <text x="906" y="243" class="t-ctrl" text-anchor="start">LinkE</text>
+  <path d="M902 264 L1232 264" class="w-ctrl"/>
+  <text x="906" y="261" class="t-ctrl" text-anchor="start">JalrInstE</text>
+  <path d="M902 282 L1120 282 L1120 436" class="w-ctrl" marker-end="url(#core-a-ctrl)"/>
+  <text x="906" y="279" class="t-ctrl" text-anchor="start">AluOpE</text>
+  <path d="M902 300 L1043 300 L1043 427" class="w-ctrl" marker-end="url(#core-a-ctrl)"/>
+  <text x="906" y="297" class="t-ctrl" text-anchor="start">SrcAE</text>
+  <path d="M902 318 L1068 318 L1068 512 L1043 512 L1043 527" class="w-ctrl" marker-end="url(#core-a-ctrl)"/>
+  <text x="906" y="315" class="t-ctrl" text-anchor="start">SrcBE</text>
+  <path d="M902 336 L1208 336 L1208 474" class="w-ctrl x-M" marker-end="url(#core-a-ctrl)"/>
+  <text x="906" y="333" class="t-ctrl x-M" text-anchor="start">MulDivE, MulDivOpE</text>
+  <circle cx="1080" cy="336" r="3" class="dot m-ctrl x-M"/>
+  <path d="M1080 336 L1080 596 L1104 596 L1104 604" class="w-ctrl x-M" marker-end="url(#core-a-ctrl)"/>
+  <path d="M902 354 L1360 354" class="w-ctrl x-Csr" marker-end="url(#core-a-ctrl)"/>
+  <text x="906" y="351" class="t-ctrl x-Csr" text-anchor="start">CsrE, CsrCmdE, CsrWriteE</text>
+  <path d="M902 372 L1360 372" class="w-ctrl x-Trap" marker-end="url(#core-a-ctrl)"/>
+  <text x="906" y="369" class="t-ctrl x-Trap" text-anchor="start">MretE</text>
+  <path d="M902 390 L1360 390" class="w-ctrl x-A" marker-end="url(#core-a-ctrl)"/>
+  <text x="906" y="387" class="t-ctrl x-A" text-anchor="start">LrE, ScE, AmoE, AmoOpE</text>
+  <path d="M1902 210 L2043 210 L2043 486" class="w-ctrl" marker-end="url(#core-a-ctrl)"/>
+  <text x="1906" y="206" class="t-ctrl" text-anchor="start">RegWriteW, WbSelW</text>
+  <circle cx="1940" cy="210" r="3" class="dot m-ctrl"/>
+  <path d="M680 432 L722 432 L722 810 L780 810" class="w-ctrl x-Trap" marker-end="url(#core-a-ctrl)"/>
+  <text x="719" y="797" class="t-ctrl-s x-Trap" transform="rotate(-90 719 797)">IllegalD, EcallD, EbreakD, BranchD, JalD, TakenD</text>
+  <circle cx="722" cy="505" r="3" class="dot m-ctrl x-Trap"/>
+  <text x="834" y="177" class="t-ctrl-s x-Trap" text-anchor="end">ExcD → ctrl = 0</text>
+  <circle cx="1300" cy="228" r="3" class="dot m-ctrl x-Trap"/>
+  <path d="M1232 264 L1300 264" class="w-ctrl x-Trap"/>
+  <circle cx="1300" cy="264" r="3" class="dot m-ctrl x-Trap"/>
+  <circle cx="1300" cy="390" r="3" class="dot m-ctrl x-AandTrap"/>
+  <path d="M1300 228 L1300 802" class="w-ctrl x-Trap" marker-end="url(#core-a-ctrl)"/>
+  <text x="1297" y="797" class="t-ctrl-s x-Trap" transform="rotate(-90 1297 797)">MemReadE, MemWriteE, JalrInstE, ScE, AmoE</text>
+  <text x="1824" y="185" class="t-ctrl-s x-Trap" text-anchor="end">TrapM → RegWrite = 0</text>
+  <path d="M1382 192 L1860 192 L1860 990" class="w-ctrl" marker-end="url(#core-a-ctrl)"/>
+  <text x="1386" y="189" class="t-ctrl" text-anchor="start">AluOutNotResultM</text>
+  <circle cx="1860" cy="210" r="3" class="dot m-ctrl"/>
+  <text x="1857" y="982" class="t-ctrl" transform="rotate(-90 1857 982)">AluOutNotResultM, RegWriteM</text>
+  <path d="M1382 210 L1880 210" class="w-ctrl" marker-end="url(#core-a-ctrl)"/>
+  <text x="1386" y="207" class="t-ctrl" text-anchor="start">RegWriteM, WbSelM</text>
+  <path d="M1382 228 L1690 228 L1690 560" class="w-ctrl" marker-end="url(#core-a-ctrl)"/>
+  <text x="1386" y="225" class="t-ctrl" text-anchor="start">MemWriteM, MemReadM</text>
+  <path d="M1382 354 L1823 354 L1823 390" class="w-ctrl x-Csr"/>
+  <text x="1486" y="351" class="t-ctrl-s x-Csr" text-anchor="start">CsrM, CsrCmdM, CsrWriteM</text>
+  <path d="M1382 372 L1600 372 L1600 330" class="w-ctrl x-Trap" marker-end="url(#core-a-ctrl)"/>
+  <text x="1486" y="369" class="t-ctrl-s x-Trap" text-anchor="start">MretM</text>
+  <path d="M1382 390 L1823 390" class="w-ctrl x-A"/>
+  <text x="1486" y="387" class="t-ctrl-s x-A" text-anchor="start">LrM, ScM, AmoM, AmoOpM</text>
+  <circle cx="1440" cy="354" r="3" class="dot m-ctrl x-Csr"/>
+  <path d="M1440 354 L1440 330" class="w-ctrl x-Csr" marker-end="url(#core-a-ctrl)"/>
+  <circle cx="1823" cy="390" r="3" class="dot m-ctrl x-CsrAndA"/>
+  <text x="1820" y="462" class="t-ctrl-s x-CsrAndA" transform="rotate(-90 1820 462)">CsrM, AmoM, ScM</text>
+  <text x="1820" y="462" class="t-ctrl-s x-CsrNotA" transform="rotate(-90 1820 462)">CsrM</text>
+  <text x="1820" y="462" class="t-ctrl-s x-ANotCsr" transform="rotate(-90 1820 462)">AmoM, ScM</text>
+  <path d="M1823 390 L1823 471" class="w-ctrl x-CsrOrA" marker-end="url(#core-a-ctrl)"/>
+  <path d="M1622 330 L1622 560" class="w-ctrl x-Trap" marker-end="url(#core-a-ctrl)"/>
+  <text x="1625" y="553" class="t-ctrl-s x-Trap" text-anchor="start">TrapM</text>
+  <circle cx="1742" cy="390" r="3" class="dot m-ctrl x-A"/>
+  <path d="M1742 390 L1742 330" class="w-ctrl x-A" marker-end="url(#core-a-ctrl)"/>
+  <path d="M1784 330 L1784 480 L1804 480" class="w-ctrl x-A"/>
+  <circle cx="1807" cy="480" r="3" class="blk-ctrl x-A"/>
+  <circle cx="1784" cy="440" r="3" class="dot m-ctrl x-A"/>
+  <path d="M1784 440 L1690 440" class="w-ctrl x-A"/>
+  <text x="1696" y="437" class="t-ctrl-s x-A" text-anchor="start">ResHitM</text>
+  <circle cx="1690" cy="390" r="3" class="dot m-ctrl x-A"/>
+  <circle cx="1690" cy="440" r="3" class="dot m-ctrl x-A"/>
+  <circle cx="1540" cy="390" r="3" class="dot m-ctrl x-A"/>
+  <path d="M1540 390 L1540 410" class="w-ctrl x-A" marker-end="url(#core-a-ctrl)"/>
+  <text x="1543" y="403" class="t-ctrl-s x-A" text-anchor="start">AmoM</text>
+  <path d="M1556 440 L1556 560" class="w-ctrl x-A" marker-end="url(#core-a-ctrl)"/>
+  <text x="1559" y="553" class="t-ctrl-s x-A" text-anchor="start">amoPhase</text>
+  <circle cx="1453" cy="390" r="3" class="dot m-ctrl x-A"/>
+  <path d="M1453 390 L1453 644" class="w-ctrl x-A" marker-end="url(#core-a-ctrl)"/>
+  <text x="1450" y="630" class="t-ctrl-s x-A" text-anchor="end">AmoM</text>
+  <circle cx="1690" cy="548" r="3" class="dot m-ctrl x-A"/>
+  <path d="M1690 548 L1753 548 L1753 628" class="w-ctrl x-A" marker-end="url(#core-a-ctrl)"/>
+  <text x="1696" y="545" class="t-ctrl-s x-A" text-anchor="start">AmoOpM</text>
+  <path d="M1636 292 L1730 292" class="w-ctrl x-AandTrap" marker-end="url(#core-a-ctrl)" marker-start="url(#core-a-ctrl)"/>
+  <text x="1640" y="288" class="t-ctrl-s x-AandTrap" text-anchor="start">TrapM →</text>
+  <text x="1640" y="303" class="t-ctrl-s x-AandTrap" text-anchor="start">← ScFaultM</text>
+  <circle cx="1622" cy="425" r="3" class="dot m-ctrl x-AandTrap"/>
+  <path d="M1622 425 L1566 425" class="w-ctrl x-AandTrap" marker-end="url(#core-a-ctrl)"/>
+  <text x="1584" y="422" class="t-ctrl-s x-AandTrap" text-anchor="start">TrapM</text>
+  <circle cx="2043" cy="210" r="3" class="dot m-ctrl"/>
+</g>
+<g class="L-fwd">
+  <circle cx="1390" cy="500" r="3" class="dot m-fwd"/>
+  <path d="M1390 500 L1390 836 L559 836" class="w-fwd"/>
+  <text x="440" y="832" class="t-fwd" text-anchor="start">ALUOutM (fwd)</text>
+  <circle cx="920" cy="836" r="3" class="dot m-fwd"/>
+  <path d="M920 836 L920 465 L960 465" class="w-fwd" marker-end="url(#core-a-fwd)"/>
+  <circle cx="934" cy="836" r="3" class="dot m-fwd"/>
+  <path d="M934 836 L934 555 L960 555" class="w-fwd" marker-end="url(#core-a-fwd)"/>
+  <path d="M559 836 L559 484 L575 484" class="w-fwd" marker-end="url(#core-a-fwd)"/>
+  <circle cx="559" cy="546" r="3" class="dot m-fwd"/>
+  <path d="M559 546 L575 546" class="w-fwd" marker-end="url(#core-a-fwd)"/>
+  <path d="M2080 520 L2080 852 L567 852" class="w-fwd"/>
+  <text x="440" y="866" class="t-fwd" text-anchor="start">ResultW (fwd)</text>
+  <circle cx="928" cy="852" r="3" class="dot m-fwd"/>
+  <path d="M928 852 L928 485 L960 485" class="w-fwd" marker-end="url(#core-a-fwd)"/>
+  <circle cx="942" cy="852" r="3" class="dot m-fwd"/>
+  <path d="M942 852 L942 575 L960 575" class="w-fwd" marker-end="url(#core-a-fwd)"/>
+  <path d="M567 852 L567 498 L575 498" class="w-fwd" marker-end="url(#core-a-fwd)"/>
+  <circle cx="567" cy="560" r="3" class="dot m-fwd"/>
+  <path d="M567 560 L575 560" class="w-fwd" marker-end="url(#core-a-fwd)"/>
+</g>
+<g class="L-haz">
+  <path d="M131 406 L131 440" class="w-haz" marker-end="url(#core-a-haz)"/>
+  <text x="128" y="426" class="t-haz" text-anchor="end">PCEnF</text>
+  <rect x="54" y="300" width="90" height="106" rx="4" class="blk-haz"/>
+  <text x="99" y="320" class="t-title" text-anchor="middle">PCSel</text>
+  <text x="60" y="338" class="t-haz x-Trap" text-anchor="start">RedirectM→11</text>
+  <text x="60" y="350" class="t-haz" text-anchor="start">JalrE→10</text>
+  <text x="60" y="362" class="t-haz" text-anchor="start">PCSrcD→01</text>
+  <text x="60" y="382" class="t-haz" text-anchor="start">EN = PCSel≠0</text>
+  <text x="72" y="394" class="t-haz" text-anchor="start">| !StallF</text>
+  <path d="M73 406 L73 426" class="w-haz" marker-end="url(#core-a-haz)"/>
+  <path d="M20 1013 L10 1013 L10 356 L54 356" class="w-haz" marker-end="url(#core-a-haz)"/>
+  <text x="7" y="982" class="t-haz" transform="rotate(-90 7 982)">StallF, PCSrcD, JalrE</text>
+  <path d="M1846 48 L84 48 L84 300" class="w-haz x-Trap" marker-end="url(#core-a-haz)"/>
+  <text x="700" y="44" class="t-haz x-Trap" text-anchor="start">RedirectM = TrapM | (ValidM &amp; MretM)</text>
+  <rect x="20" y="990" width="2080" height="46" rx="6" class="blk-haz"/>
+  <text x="960" y="1009" class="t-title" text-anchor="middle">Hazard unit:  Hold = Stall | BusyE | BusyM</text>
+  <text x="560" y="1028" class="t-haz x-notTrap" text-anchor="middle">PCSrcD = (BranchD &amp; TakenD | JalD) &amp; !Hold</text>
+  <text x="1360" y="1028" class="t-haz x-notTrap" text-anchor="middle">JalrE = ValidE &amp; JalrInstE &amp; !BusyM</text>
+  <text x="560" y="1028" class="t-haz x-Trap" text-anchor="middle">PCSrcD = (BranchD &amp; TakenD | JalD) &amp; !ExcD &amp; !Hold</text>
+  <text x="1360" y="1028" class="t-haz x-Trap" text-anchor="middle">JalrE = ValidE &amp; JalrInstE &amp; !ExcE &amp; !BusyM</text>
+  <path d="M356 990 L356 790" class="w-haz" marker-end="url(#core-a-haz)"/>
+  <text x="353" y="982" class="t-haz" transform="rotate(-90 353 982)">StallD</text>
+  <path d="M366 990 L366 790" class="w-haz" marker-end="url(#core-a-haz)"/>
+  <text x="363" y="982" class="t-haz" transform="rotate(-90 363 982)">FlushD</text>
+  <circle cx="356" cy="900" r="3" class="dot m-haz"/>
+  <path d="M356 900 L179 900 L179 491" class="w-haz" marker-end="url(#core-a-haz)"/>
+  <text x="183" y="585" class="t-haz" text-anchor="start">StallD</text>
+  <path d="M588 990 L588 568" class="w-haz" marker-end="url(#core-a-haz)"/>
+  <text x="585" y="982" class="t-haz" transform="rotate(-90 585 982)">ForwardBD</text>
+  <path d="M610 990 L610 452 L588 452 L588 462" class="w-haz" marker-end="url(#core-a-haz)"/>
+  <text x="607" y="982" class="t-haz" transform="rotate(-90 607 982)">ForwardAD</text>
+  <circle cx="700" cy="408" r="3" class="dot m-haz"/>
+  <path d="M700 408 L700 990" class="w-haz" marker-end="url(#core-a-haz)"/>
+  <text x="697" y="982" class="t-haz" transform="rotate(-90 697 982)">BranchD, JalD, ReadsRs1D, ReadsRs2D, TakenD</text>
+  <circle cx="744" cy="718" r="3" class="dot m-haz"/>
+  <path d="M744 718 L744 990" class="w-haz" marker-end="url(#core-a-haz)"/>
+  <text x="741" y="982" class="t-haz" transform="rotate(-90 741 982)">Rs1D</text>
+  <circle cx="760" cy="736" r="3" class="dot m-haz"/>
+  <path d="M760 736 L760 990" class="w-haz" marker-end="url(#core-a-haz)"/>
+  <text x="757" y="982" class="t-haz" transform="rotate(-90 757 982)">Rs2D</text>
+  <path d="M886 990 L886 830" class="w-haz x-MorA" marker-end="url(#core-a-haz)"/>
+  <text x="883" y="982" class="t-haz x-MorA" transform="rotate(-90 883 982)">StallE</text>
+  <path d="M896 990 L896 830" class="w-haz" marker-end="url(#core-a-haz)"/>
+  <text x="893" y="982" class="t-haz" transform="rotate(-90 893 982)">FlushE</text>
+  <path d="M952 990 L952 424 L973 424 L973 433" class="w-haz" marker-end="url(#core-a-haz)"/>
+  <text x="949" y="982" class="t-haz" transform="rotate(-90 949 982)">ForwardAE</text>
+  <path d="M973 990 L973 584" class="w-haz" marker-end="url(#core-a-haz)"/>
+  <text x="970" y="982" class="t-haz" transform="rotate(-90 970 982)">ForwardBE</text>
+  <circle cx="1046" cy="718" r="3" class="dot m-haz"/>
+  <path d="M1046 718 L1046 990" class="w-haz" marker-end="url(#core-a-haz)"/>
+  <text x="1043" y="982" class="t-haz" transform="rotate(-90 1043 982)">Rs1E</text>
+  <circle cx="1062" cy="736" r="3" class="dot m-haz"/>
+  <path d="M1062 736 L1062 990" class="w-haz" marker-end="url(#core-a-haz)"/>
+  <text x="1059" y="982" class="t-haz" transform="rotate(-90 1059 982)">Rs2E</text>
+  <path d="M1150 638 L1150 990" class="w-haz x-M" marker-end="url(#core-a-haz)"/>
+  <text x="1147" y="982" class="t-haz x-M" transform="rotate(-90 1147 982)">BusyE</text>
+  <path d="M1096 990 L1096 638" class="w-haz x-M" marker-end="url(#core-a-haz)"/>
+  <text x="1093" y="982" class="t-haz x-M" transform="rotate(-90 1093 982)">RedirectM, BusyM</text>
+  <circle cx="1214" cy="754" r="3" class="dot m-haz"/>
+  <path d="M1214 754 L1214 990" class="w-haz" marker-end="url(#core-a-haz)"/>
+  <text x="1211" y="982" class="t-haz" transform="rotate(-90 1211 982)">RdE</text>
+  <circle cx="1232" cy="264" r="3" class="dot m-haz"/>
+  <path d="M1232 264 L1232 990" class="w-haz" marker-end="url(#core-a-haz)"/>
+  <text x="1229" y="982" class="t-haz" transform="rotate(-90 1229 982)">JalrInstE</text>
+  <path d="M1366 990 L1366 830" class="w-haz x-A" marker-end="url(#core-a-haz)"/>
+  <text x="1363" y="982" class="t-haz x-A" transform="rotate(-90 1363 982)">StallM</text>
+  <path d="M1376 990 L1376 830" class="w-haz x-MorTrap" marker-end="url(#core-a-haz)"/>
+  <text x="1373" y="982" class="t-haz x-MorTrap" transform="rotate(-90 1373 982)">FlushM</text>
+  <circle cx="1660" cy="754" r="3" class="dot m-haz"/>
+  <path d="M1660 754 L1660 990" class="w-haz" marker-end="url(#core-a-haz)"/>
+  <text x="1657" y="982" class="t-haz" transform="rotate(-90 1657 982)">RdM</text>
+  <path d="M1846 48 L1846 990" class="w-haz x-Trap" marker-end="url(#core-a-haz)"/>
+  <text x="1843" y="982" class="t-haz x-Trap" transform="rotate(-90 1843 982)">RedirectM</text>
+  <path d="M1891 990 L1891 830" class="w-haz x-A" marker-end="url(#core-a-haz)"/>
+  <text x="1888" y="982" class="t-haz x-A" transform="rotate(-90 1888 982)">FlushW</text>
+  <circle cx="2000" cy="754" r="3" class="dot m-haz"/>
+  <path d="M2000 754 L2000 990" class="w-haz" marker-end="url(#core-a-haz)"/>
+  <text x="1997" y="982" class="t-haz" transform="rotate(-90 1997 982)">RdW</text>
+  <path d="M800 830 L800 990" class="w-haz x-Trap" marker-end="url(#core-a-haz)"/>
+  <text x="797" y="982" class="t-haz x-Trap" transform="rotate(-90 797 982)">ExcD</text>
+  <path d="M1281 830 L1281 990" class="w-haz x-Trap" marker-end="url(#core-a-haz)"/>
+  <text x="1278" y="982" class="t-haz x-Trap" transform="rotate(-90 1278 982)">ExcE</text>
+  <path d="M1594 256 L1594 48" class="w-haz x-Trap"/>
+  <circle cx="1594" cy="48" r="3" class="dot m-haz x-Trap"/>
+  <path d="M1530 440 L1530 990" class="w-haz x-A" marker-end="url(#core-a-haz)"/>
+  <text x="1527" y="982" class="t-haz x-A" transform="rotate(-90 1527 982)">BusyM = AmoM &amp; !amoPhase &amp; !TrapM</text>
+  <path d="M2043 210 L2064 210 L2064 990" class="w-haz" marker-end="url(#core-a-haz)"/>
+  <text x="2061" y="982" class="t-haz" transform="rotate(-90 2061 982)">RegWriteW</text>
+</g>
+<g class="L-pc">
+  <path d="M240 620 L256 620 L256 572 L22 572 L22 530 L60 530" class="w-pc" marker-end="url(#core-a-pc)"/>
+  <text x="262" y="586" class="t-pc" text-anchor="start">PCPlus4F</text>
+  <path d="M1158 104 L40 104 L40 470 L60 470" class="w-pc" marker-end="url(#core-a-pc)"/>
+  <text x="900" y="100" class="t-pc" text-anchor="start">PCJalrE = (Rs1FwdE + ImmE) &amp; ~1</text>
+  <path d="M840 118 L50 118 L50 440 L60 440" class="w-pc" marker-end="url(#core-a-pc)"/>
+  <text x="560" y="114" class="t-pc" text-anchor="start">PCBranchD = PCD + ImmD</text>
+  <path d="M840 612 L840 118" class="w-pc"/>
+  <circle cx="1158" cy="505" r="3" class="dot m-pc"/>
+  <path d="M1158 505 L1158 104" class="w-pc"/>
+  <circle cx="840" cy="590" r="3" class="dot m-pc x-Trap"/>
+  <path d="M1574 256 L1574 90 L30 90 L30 500 L60 500" class="w-pc x-Trap" marker-end="url(#core-a-pc)"/>
+  <text x="1000" y="86" class="t-pc x-Trap" text-anchor="start">PCRedirectM = TrapM ? mtvec : mepc</text>
+</g>
+<g class="L-fields">
+  <text x="356" y="806" class="t-field" text-anchor="end">EN</text>
+  <text x="368" y="806" class="t-field" text-anchor="start">CLR</text>
+  <text x="884" y="846" class="t-field x-MorA" text-anchor="end">EN</text>
+  <text x="898" y="846" class="t-field" text-anchor="start">CLR</text>
+  <text x="1364" y="846" class="t-field x-A" text-anchor="end">EN</text>
+  <text x="1378" y="846" class="t-field x-MorTrap" text-anchor="start">CLR</text>
+  <text x="1893" y="846" class="t-field x-A" text-anchor="start">CLR</text>
+</g>
+<g class="L-text">
+  <text x="180" y="27" class="t-stage" text-anchor="middle">IF</text>
+  <text x="625" y="27" class="t-stage" text-anchor="middle">ID</text>
+  <text x="1125" y="27" class="t-stage" text-anchor="middle">EX</text>
+  <text x="1595" y="27" class="t-stage" text-anchor="middle">MEM</text>
+  <text x="2005" y="27" class="t-stage" text-anchor="middle">WB</text>
+  <text x="361" y="394" class="t-title" text-anchor="middle">IF/ID</text>
+  <text x="891" y="174" class="t-title" text-anchor="middle">ID/EX</text>
+  <text x="1371" y="174" class="t-title" text-anchor="middle">EX/MEM</text>
+  <text x="1891" y="174" class="t-title" text-anchor="middle">MEM/WB</text>
+  <text x="63" y="443" class="t-field" text-anchor="start">01</text>
+  <text x="63" y="473" class="t-field" text-anchor="start">10</text>
+  <text x="63" y="503" class="t-field x-Trap" text-anchor="start">11</text>
+  <text x="63" y="533" class="t-field" text-anchor="start">00</text>
+  <text x="73" y="562" class="t-small" text-anchor="middle">PCNextF</text>
+  <text x="117" y="514" class="t-title" text-anchor="end">PCF</text>
+  <text x="132" y="532" class="t-small" text-anchor="end">bootAddr</text>
+  <text x="170" y="452" class="t-small" text-anchor="start">1</text>
+  <text x="170" y="474" class="t-small" text-anchor="start">0</text>
+  <text x="200" y="434" class="t-small" text-anchor="start">ImemAddrF</text>
+  <text x="200" y="386" class="t-small" text-anchor="start">PCD (when StallD)</text>
+  <text x="250" y="488" class="t-title" text-anchor="middle">Instr memory</text>
+  <text x="250" y="503" class="t-small" text-anchor="middle">SimTop.IMem</text>
+  <text x="250" y="515" class="t-small" text-anchor="middle">sync read</text>
+  <text x="204" y="472" class="t-small" text-anchor="start">addr</text>
+  <text x="296" y="474" class="t-small" text-anchor="end">rdata</text>
+  <text x="168" y="694" class="t-small" text-anchor="start">PCF</text>
+  <text x="220" y="624" class="t-title" text-anchor="middle">+4</text>
+  <text x="1200" y="128" class="t-small" text-anchor="start">ResultW</text>
+  <text x="1200" y="140" class="t-small" text-anchor="start">RdW</text>
+  <text x="374" y="463" class="t-small" text-anchor="start">InstD</text>
+  <text x="400" y="294" class="t-small" text-anchor="start">opcode, funct3, funct7</text>
+  <text x="640" y="310" class="t-title" text-anchor="middle">Control</text>
+  <text x="640" y="325" class="t-small" text-anchor="middle">unit</text>
+  <text x="495" y="529" class="t-title" text-anchor="middle"></text>
+  <text x="495" y="505" class="t-title" text-anchor="middle">Register file</text>
+  <text x="514" y="463" class="t-small" text-anchor="start">we</text>
+  <text x="495" y="595" class="t-small" text-anchor="middle">read-first</text>
+  <text x="444" y="474" class="t-small" text-anchor="start">raddr1</text>
+  <text x="444" y="524" class="t-small" text-anchor="start">raddr2</text>
+  <text x="444" y="563" class="t-small" text-anchor="start">waddr</text>
+  <text x="444" y="583" class="t-small" text-anchor="start">wdata</text>
+  <text x="546" y="474" class="t-small" text-anchor="end">rdata1</text>
+  <text x="546" y="536" class="t-small" text-anchor="end">rdata2</text>
+  <text x="396" y="484" class="t-small" text-anchor="start">19:15</text>
+  <text x="396" y="514" class="t-small" text-anchor="start">24:20</text>
+  <text x="485" y="664" class="t-title" text-anchor="middle">ImmGen</text>
+  <text x="600" y="654" class="t-small" text-anchor="start">ImmD</text>
+  <text x="400" y="694" class="t-small x-notCsr" text-anchor="start">PCD</text>
+  <text x="400" y="694" class="t-small x-Csr" text-anchor="start">PCD, InstD</text>
+  <text x="400" y="714" class="t-small" text-anchor="start">19:15 Rs1D</text>
+  <text x="400" y="732" class="t-small" text-anchor="start">24:20 Rs2D</text>
+  <text x="400" y="750" class="t-small" text-anchor="start">11:7 RdD</text>
+  <text x="400" y="768" class="t-small" text-anchor="start">14:12 Funct3D</text>
+  <text x="578" y="473" class="t-field" text-anchor="start">00</text>
+  <text x="578" y="487" class="t-field" text-anchor="start">01</text>
+  <text x="578" y="501" class="t-field" text-anchor="start">10</text>
+  <text x="578" y="535" class="t-field" text-anchor="start">00</text>
+  <text x="578" y="549" class="t-field" text-anchor="start">01</text>
+  <text x="578" y="563" class="t-field" text-anchor="start">10</text>
+  <text x="760" y="462" class="t-small" text-anchor="start">Rs1ValD</text>
+  <text x="740" y="594" class="t-small" text-anchor="start">Rs2ValD</text>
+  <text x="670" y="509" class="t-title" text-anchor="middle">cmp</text>
+  <text x="690" y="484" class="t-small" text-anchor="end">TakenD</text>
+  <text x="840" y="634" class="t-title" text-anchor="middle">+</text>
+  <text x="821" y="820" class="t-title x-Trap" text-anchor="middle">IdExcCheck</text>
+  <text x="906" y="442" class="t-small" text-anchor="start">Rs1ValE</text>
+  <text x="906" y="594" class="t-small" text-anchor="start">Rs2ValE</text>
+  <text x="963" y="448" class="t-field" text-anchor="start">00</text>
+  <text x="963" y="468" class="t-field" text-anchor="start">01</text>
+  <text x="963" y="488" class="t-field" text-anchor="start">10</text>
+  <text x="963" y="538" class="t-field" text-anchor="start">00</text>
+  <text x="963" y="558" class="t-field" text-anchor="start">01</text>
+  <text x="963" y="578" class="t-field" text-anchor="start">10</text>
+  <text x="1033" y="443" class="t-field" text-anchor="start">0</text>
+  <text x="1033" y="463" class="t-field" text-anchor="start">1</text>
+  <text x="1033" y="483" class="t-field" text-anchor="start">2</text>
+  <text x="1033" y="538" class="t-field" text-anchor="start">0</text>
+  <text x="1033" y="558" class="t-field" text-anchor="start">1</text>
+  <text x="1033" y="578" class="t-field x-CsrOrA" text-anchor="start">2</text>
+  <text x="1250" y="646" class="t-small" text-anchor="start">Rs2FwdE → StoreDataM</text>
+  <text x="906" y="694" class="t-small x-notCsr" text-anchor="start">PCE</text>
+  <text x="906" y="694" class="t-small x-Csr" text-anchor="start">PCE, InstE</text>
+  <text x="1022" y="484" class="t-small" text-anchor="start">0</text>
+  <text x="906" y="654" class="t-small" text-anchor="start">ImmE</text>
+  <text x="1022" y="579" class="t-small x-CsrOrA" text-anchor="start">0</text>
+  <text x="1058" y="449" class="t-field" text-anchor="start">AluAE</text>
+  <text x="1058" y="549" class="t-field" text-anchor="start">AluBE</text>
+  <text x="1128" y="509" class="t-title" text-anchor="middle">ALU</text>
+  <text x="1122" y="526" class="t-small" text-anchor="middle">AluRawE</text>
+  <text x="1193" y="483" class="t-field" text-anchor="start">0</text>
+  <text x="1193" y="503" class="t-field" text-anchor="start">1</text>
+  <text x="1193" y="523" class="t-field x-M" text-anchor="start">2</text>
+  <text x="1250" y="494" class="t-small" text-anchor="start">AluOutE</text>
+  <text x="1126" y="682" class="t-title" text-anchor="middle">+4</text>
+  <text x="1123" y="625" class="t-title x-M" text-anchor="middle">Mul/Div</text>
+  <text x="1026" y="609" class="t-field x-M" text-anchor="start">Rs1FwdE</text>
+  <text x="906" y="750" class="t-small" text-anchor="start">RdE</text>
+  <text x="906" y="768" class="t-small" text-anchor="start">Funct3E</text>
+  <text x="906" y="714" class="t-small" text-anchor="start">Rs1E</text>
+  <text x="906" y="732" class="t-small" text-anchor="start">Rs2E</text>
+  <text x="1150" y="812" class="t-field x-Trap" text-anchor="end">ExcValidE, ExcCauseE, ExcTvalE</text>
+  <text x="1281" y="820" class="t-title x-Trap" text-anchor="middle">ExExcCheck</text>
+  <text x="1906" y="494" class="t-small" text-anchor="start">ALUOutW</text>
+  <text x="1932" y="540" class="t-small" text-anchor="start">ALUOutW[1:0]</text>
+  <text x="1952" y="598" class="t-title" text-anchor="middle">load</text>
+  <text x="1952" y="613" class="t-small" text-anchor="middle">align</text>
+  <text x="1906" y="768" class="t-small" text-anchor="start">Funct3W</text>
+  <text x="2033" y="503" class="t-field" text-anchor="start">0</text>
+  <text x="2033" y="543" class="t-field" text-anchor="start">1</text>
+  <text x="1992" y="614" class="t-small" text-anchor="start">LoadDataW</text>
+  <text x="1906" y="750" class="t-small" text-anchor="start">RdW</text>
+  <text x="1906" y="240" class="t-field x-Trap" text-anchor="start">TrapW … → retire</text>
+  <text x="787" y="797" class="t-field x-Trap" transform="rotate(-90 787 797)">PCD, InstD</text>
+  <text x="809" y="797" class="t-field x-Trap" transform="rotate(-90 809 797)">PCBranchD</text>
+  <text x="1163" y="785" class="t-field x-Trap" transform="rotate(-90 1163 785)">AluRawE, PCJalrE</text>
+  <text x="1640" y="494" class="t-small" text-anchor="start">ALUOutM</text>
+  <text x="1813" y="483" class="t-field x-A" text-anchor="start">0</text>
+  <text x="1813" y="503" class="t-field x-CsrOrA" text-anchor="start">1</text>
+  <text x="1813" y="523" class="t-field x-Csr" text-anchor="start">2</text>
+  <text x="1813" y="543" class="t-field x-A" text-anchor="start">3</text>
+  <text x="1443" y="653" class="t-field x-A" text-anchor="start">0</text>
+  <text x="1443" y="673" class="t-field x-A" text-anchor="start">1</text>
+  <text x="1496.5" y="664" class="t-title" text-anchor="middle">align</text>
+  <text x="1492" y="634" class="t-field-s" text-anchor="end">[1:0]</text>
+  <text x="1622" y="623" class="t-title" text-anchor="middle">Data memory</text>
+  <text x="1622" y="638" class="t-small" text-anchor="middle">SimTop.DMem</text>
+  <text x="1622" y="650" class="t-small" text-anchor="middle">rdata at t + 1</text>
+  <text x="1622" y="662" class="t-small" text-anchor="middle">addr / wdata / wstrb</text>
+  <text x="1696" y="594" class="t-small" text-anchor="end">rdata</text>
+  <text x="1440" y="750" class="t-small" text-anchor="start">RdM</text>
+  <text x="1440" y="768" class="t-small" text-anchor="start">Funct3M</text>
+  <text x="1451" y="291" class="t-title x-Csr" text-anchor="middle">CsrFile</text>
+  <text x="1451" y="306" class="t-small x-Csr" text-anchor="middle">InstM[31:20]</text>
+  <text x="1451" y="318" class="t-small x-Csr" text-anchor="middle">retire ← WB</text>
+  <text x="1484" y="470" class="t-small x-Csr" text-anchor="start">rdata</text>
+  <text x="1412" y="640" class="t-field-s x-CsrNotTrap" transform="rotate(-90 1412 640)">PCM, InstM</text>
+  <text x="1412" y="640" class="t-field-s x-Trap" transform="rotate(-90 1412 640)">ExcM, PCM, InstM</text>
+  <text x="1599" y="297" class="t-title x-Trap" text-anchor="middle">TrapUnit</text>
+  <text x="1491" y="259" class="t-field-s x-Trap" text-anchor="start">mtvec, mepc,</text>
+  <text x="1491" y="268" class="t-field-s x-Trap" text-anchor="start">CsrM &amp; illegal</text>
+  <text x="1491" y="303" class="t-field-s x-Trap" text-anchor="start">TrapM, CauseM,</text>
+  <text x="1491" y="312" class="t-field-s x-Trap" text-anchor="start">TvalM, mret</text>
+  <text x="1706" y="241" class="t-field-s x-Trap" text-anchor="start">TrapM, InterruptM, CauseM, …</text>
+  <text x="1776" y="291" class="t-title x-A" text-anchor="middle">Reservation</text>
+  <text x="1776" y="306" class="t-small x-A" text-anchor="middle">resValid</text>
+  <text x="1776" y="318" class="t-small x-A" text-anchor="middle">resAddr</text>
+  <text x="1533" y="429" class="t-title x-A" text-anchor="middle">amoPhase</text>
+  <text x="1753" y="646" class="t-title x-A" text-anchor="middle">AmoAlu</text>
+  <text x="1799" y="572" class="t-field x-A" text-anchor="start">old</text>
+  <text x="1600" y="734" class="t-field x-A" text-anchor="start">StoreDataM</text>
+  <text x="1600" y="702" class="t-field x-A" text-anchor="start">new word</text>
+  <text x="2077" y="640" class="t-small" transform="rotate(-90 2077 640)">ResultW</text>
+  <text x="908" y="411" class="t-field x-MorA" text-anchor="start">Rs1FwdE (StallE)</text>
+  <text x="908" y="627" class="t-field x-MorA" text-anchor="start">Rs2FwdE (StallE)</text>
+</g>
+</svg>

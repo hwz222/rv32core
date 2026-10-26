@@ -1,0 +1,11 @@
+# sbt and chiseltest output
+target/
+project/target/
+project/project/
+test_run_dir/
+
+# Verilog generated from Chisel, rebuilt by run_rtl_sim.sh
+generated/
+
+# Verilator build output
+obj_dir/

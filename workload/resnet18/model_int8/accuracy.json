@@ -1,0 +1,8 @@
+{
+  "model": "resnet18_w16",
+  "test_images": 10000,
+  "fp32_folded_acc": 92.71,
+  "int8_acc": 92.44,
+  "drop": 0.27,
+  "top1_agreement_fp32_vs_int8": 98.51
+}

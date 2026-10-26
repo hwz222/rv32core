@@ -1,0 +1,48 @@
+# Build output of the workloads. The generated headers depend on make
+# variables (shape, layer, seed), so a committed copy would always be stale.
+workload/*/gemm_data.h
+workload/*/gemm_data.h.new
+workload/*/gemm_host
+workload/*/*.elf
+workload/*/*.o
+workload/*/bench_*_data.c
+workload/*/bench_*_data.h
+workload/*/bench_*_host
+workload/*/.gen/
+
+# ISA simulator build output
+isa_sim/isa_sim
+isa_sim/build/
+
+# Simulation output
+*.vcd
+*.fst
+out/
+
+# INT8 bit-exact check: generated sources, host binaries and ELFs.
+# bitexact.log is kept.
+verification/int8_models/model_*/
+verification/int8_models/images_*/
+verification/int8_models/eval_host_*
+verification/int8_models/*.elf
+
+# riscv-tests checkout and build (fetched by build_riscv_tests.sh)
+verification/isa_compliance/riscv-tests/
+verification/isa_compliance/build/
+
+# Python and model training. Datasets, checkpoints and run outputs live
+# outside the repository (see ml/README.md).
+__pycache__/
+*.pyc
+.venv/
+ml/runs/
+ml/data/
+*.pt
+*.pth
+*.ckpt
+
+# Editors and local tools
+.DS_Store
+.vscode/
+.idea/
+.claude/

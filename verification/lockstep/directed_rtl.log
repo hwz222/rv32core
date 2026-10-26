@@ -1,0 +1,20 @@
+# directed tests on rtl
+# core (RTL_CORE):   default of run_rtl_sim.sh
+# PASS = RTL exit 0 and trace equal to isa_sim (compare_trace.py)
+# repository commit: uncommitted
+# date:              2026-10-26T13:46:55Z
+PASS  t01_alu          OK: 45 lines match (0 time-CSR reads compared without x<rd>)
+PASS  t02_fwd_dist     OK: 58 lines match (0 time-CSR reads compared without x<rd>)
+PASS  t03_x0           OK: 32 lines match (0 time-CSR reads compared without x<rd>)
+PASS  t04_load_store   OK: 71 lines match (0 time-CSR reads compared without x<rd>)
+PASS  t05_load_use     OK: 39 lines match (0 time-CSR reads compared without x<rd>)
+PASS  t06_branch_id    OK: 76 lines match (0 time-CSR reads compared without x<rd>)
+PASS  t07_jal_jalr     OK: 52 lines match (0 time-CSR reads compared without x<rd>)
+PASS  t08_muldiv       OK: 55 lines match (0 time-CSR reads compared without x<rd>)
+PASS  t09_csr          OK: 48 lines match (1 time-CSR reads compared without x<rd>)
+PASS  t10_trap         OK: 128 lines match (0 time-CSR reads compared without x<rd>)
+PASS  t11_amo          OK: 49 lines match (0 time-CSR reads compared without x<rd>)
+PASS  t12_fence        OK: 32 lines match (0 time-CSR reads compared without x<rd>)
+PASS  t13_mix          OK: 111 lines match (0 time-CSR reads compared without x<rd>)
+# pass=13 fail=0
+# core used: core

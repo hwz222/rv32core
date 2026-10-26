@@ -1,0 +1,18 @@
+# 2026-10-26 21:31:11  repo uncommitted
+# the ISA simulator's contract: what it must refuse, and how
+
+case                                         want     got      result
+a correct workload finishes                  0        0        ok -- exit 0, tohost written
+a file that is not an ELF is rejected        2        2        ok -- exit 2, bad ELF
+a missing file is rejected                   2        2        ok -- exit 2, cannot open
+a truncated ELF is rejected                  2        2        ok -- exit 2, segments past the end of file
+an ELF with no result symbols is rejected    2        2        ok -- exit 2, missing symbol
+  ... but --no-dump runs it anyway           0        0        ok -- exit 0, the dump was the only thing missing
+an infinite loop hits the instruction limit  4        4        ok -- exit 4, stopped instead of hanging
+an unhandled illegal instruction stops       3        3        ok -- exit 3, trap with mtvec == 0
+a load from IMEM is refused                  non-zero 3        ok -- Harvard rule enforced
+no arguments is a usage error                2        2        ok -- exit 2, usage printed
+a missing output directory is created        files    files    ok -- both output files written
+report.json is valid and has a count         valid    valid    ok -- scripts parse it
+
+# 12 passed, 0 failed
