@@ -89,11 +89,22 @@ for name in $names; do
         echo "${m}x${n}x${k} $dump $trace" >> "$run/gemm.txt"
     done
 
-    # b. directed tests, c. riscv-tests (each writes its log inside the worktree)
+    # b. directed tests, c. riscv-tests (each writes its log inside the worktree).
+    # The worktree also holds the committed logs, so delete them first: if a
+    # suite failed to start, copying the old log would report a passing run.
+    rm -f "$WT/verification/lockstep/directed_rtl.log" \
+          "$WT/verification/isa_compliance/riscv_tests_rtl.log"
     bash "$WT/verification/lockstep/run_directed.sh" --rtl >/dev/null 2>&1
-    cp "$WT/verification/lockstep/directed_rtl.log" "$run/"
-    bash "$WT/verification/isa_compliance/run_riscv_tests.sh" --rtl >/dev/null 2>&1
-    cp "$WT/verification/isa_compliance/riscv_tests_rtl.log" "$run/"
+    RISCV_TESTS_OUT="$RT_OUT" \
+        bash "$WT/verification/isa_compliance/run_riscv_tests.sh" --rtl >/dev/null 2>&1
+    for f in "$WT/verification/lockstep/directed_rtl.log" \
+             "$WT/verification/isa_compliance/riscv_tests_rtl.log"; do
+        if ! grep -q 'pass=' "$f" 2>/dev/null; then
+            echo "error: $(basename "$f") has no result for mutant $name" >&2
+            exit 1
+        fi
+        cp "$f" "$run/"
+    done
 
     # 3. One block of the log
     python3 "$FI" summary "$name" "$run" | tee -a "$LOG"

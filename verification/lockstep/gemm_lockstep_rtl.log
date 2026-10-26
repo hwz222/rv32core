@@ -1,7 +1,7 @@
 # GEMM lockstep: isa_sim trace vs RTL trace, and RTL dump vs host golden
 # PASS = RTL exit 0, traces equal (compare_trace.py), dump equal to gemm_host
-# repository commit: uncommitted
-# date:              2026-10-26T13:47:55Z
+# repository commit: 8aed5cf32bfd3adbb412ddfe87362d8c0c4ad69f-dirty
+# date:              2026-10-26T14:07:42Z
 # status M N K seed   result      instret     cycles    CPI  trace compare / note
   PASS  8 8 8 1      dump=match       4443       5027  1.131  OK: 4443 lines match (0 time-CSR reads compared without x<rd>) (the default shape)
   PASS  13 7 5 2     dump=match       4483       5036  1.123  OK: 4483 lines match (0 time-CSR reads compared without x<rd>) (no dimension shares a factor)

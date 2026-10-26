@@ -10,7 +10,7 @@ it by running three programs on the same images and comparing every logit:
 |---|---|---|
 | 1 | `qref.py` (Python, integer arithmetic) | all 10,000 CIFAR-10 test images (reference) |
 | 2 | `eval.c` + `workload/common/nn_int8.c`, built for the host | all 10,000 |
-| 3 | the same C code built for RV32IMA, run on `isa_sim` | a sample (default: the first 1,000) |
+| 3 | the same C code built for RV32IMA, run on `isa_sim` | a sample (default: the first 1,000; the committed log used 100) |
 
 Programs 2 and 3 are the same source code. Because the arithmetic is
 integer-only and has no undefined behavior (sums fit in int32, see

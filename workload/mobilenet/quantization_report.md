@@ -155,7 +155,7 @@ images and diffs every logit:
 3. the same source built for RV32IMA, run on `isa_sim`
 
 Result (`verification/int8_models/bitexact.log`): **0 logits differ**, over
-10,000 images on the host and 1,000 on the simulator. Because program 1 sums
+10,000 images on the host and the first 100 on the simulator. Because program 1 sums
 in int64 and cannot overflow, the agreement also shows the int32 accumulator
 never overflowed on those images — worth checking here, because the dead
 stem channels push the static accumulator bound to 50% of int32. Measured

@@ -1,4 +1,4 @@
-# 2026-10-26 21:31:35  repo 
+# 2026-10-26 22:06:17  repo 8aed5cf
 # every operator layer of both models: host golden vs isa_sim, every output value
 
 model      benchmark      layer                  result      detail
@@ -58,4 +58,4 @@ resnet18   bench_resadd   layer3.1.add           identical     4096 vals    3441
 resnet18   bench_resadd   layer4.0.add           identical     2048 vals    159826 insns  shape 128x4x4, two input scales
 resnet18   bench_resadd   layer4.1.add           identical     2048 vals    172186 insns  shape 128x4x4, two input scales
 
-# 55 layers identical, 0 differ  (33 s)
+# 55 layers identical, 0 differ  (75 s)

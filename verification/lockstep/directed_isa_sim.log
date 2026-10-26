@@ -1,6 +1,6 @@
 # directed tests on isa_sim
-# repository commit: uncommitted
-# date:              2026-10-26T13:46:55Z
+# repository commit: 8aed5cf32bfd3adbb412ddfe87362d8c0c4ad69f-dirty
+# date:              2026-10-26T14:07:40Z
 PASS  t01_alu          45 trace lines
 PASS  t02_fwd_dist     58 trace lines
 PASS  t03_x0           32 trace lines

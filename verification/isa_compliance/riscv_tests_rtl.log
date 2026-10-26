@@ -2,8 +2,8 @@
 # core (RTL_CORE):    default of run_rtl_sim.sh
 # PASS = RTL exit 0 and trace equal to isa_sim (compare_trace.py)
 # riscv-tests commit: 3df703cd52d5f0d8224e3c50bf03c6cb70efff98
-# repository commit:  uncommitted
-# date:               2026-10-26T13:47:50Z
+# repository commit:  8aed5cf32bfd3adbb412ddfe87362d8c0c4ad69f-dirty
+# date:               2026-10-26T14:07:33Z
 PASS   rv32ua-p-amoadd_w        
 PASS   rv32ua-p-amoand_w        
 PASS   rv32ua-p-amomaxu_w       

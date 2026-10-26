@@ -1,8 +1,8 @@
 # directed tests on rtl
 # core (RTL_CORE):   default of run_rtl_sim.sh
 # PASS = RTL exit 0 and trace equal to isa_sim (compare_trace.py)
-# repository commit: uncommitted
-# date:              2026-10-26T13:46:55Z
+# repository commit: 8aed5cf32bfd3adbb412ddfe87362d8c0c4ad69f-dirty
+# date:              2026-10-26T14:07:40Z
 PASS  t01_alu          OK: 45 lines match (0 time-CSR reads compared without x<rd>)
 PASS  t02_fwd_dist     OK: 58 lines match (0 time-CSR reads compared without x<rd>)
 PASS  t03_x0           OK: 32 lines match (0 time-CSR reads compared without x<rd>)

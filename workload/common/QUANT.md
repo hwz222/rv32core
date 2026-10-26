@@ -582,7 +582,7 @@ python3 verification/int8_models/check_bitexact.py --model all
 
 記錄於 `verification/int8_models/bitexact.log`：
 
-| 模型 | host C（10,000 張） | RV32IMA on isa_sim（1,000 張） | 每張指令數 |
+| 模型 | host C（10,000 張） | RV32IMA on isa_sim（前 100 張） | 每張指令數 |
 |---|---|---|---|
 | ResNet18 | **0 張不同** | **0 張不同** | 7.97 億 |
 | MobileNetV1 | **0 張不同** | **0 張不同** | 6.44 億 |
